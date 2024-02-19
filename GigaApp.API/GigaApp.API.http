@@ -1,0 +1,6 @@
+@GigaApp.API_HostAddress = http://localhost:5125
+
+GET {{GigaApp.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
