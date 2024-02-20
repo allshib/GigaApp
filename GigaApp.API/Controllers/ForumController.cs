@@ -1,3 +1,4 @@
+using GigaApp.Domain.UseCases.GetForums;
 using GigaApp.Storage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,9 +18,12 @@ namespace GigaApp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetForums([FromServices] ForumDbContext dbContext, CancellationToken cancellationToken)
+        [ProducesResponseType(200, Type = typeof(GigaApp.API.Models.Forum[]))]
+        public async Task<IActionResult> GetForums([FromServices] IGetForumsUseCase useCase, CancellationToken cancellationToken)
         {
-            return Ok(await dbContext.Forums.Select(x => x.Title).ToArrayAsync(cancellationToken));
+            var forums = await useCase.Execute(cancellationToken);
+
+            return Ok(forums.Select(x=> new GigaApp.API.Models.Forum {Id = x.Id, Title = x.Title }));
         }
     }
 }

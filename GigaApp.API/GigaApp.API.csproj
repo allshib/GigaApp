@@ -24,11 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GigaApp.Storage\GigaApp.Storage.csproj" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\GigaApp.Domain\GigaApp.Domain.csproj" />
+    <ProjectReference Include="..\GigaApp.Storage\GigaApp.Storage.csproj" />
   </ItemGroup>
 
 </Project>
