@@ -7,6 +7,7 @@ namespace GigaApp.Storage
     {
         [Key]
         public Guid TopicId { get; set; }
+        public required string Title { get; set; }
 
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset? UpdatedAt { get; set; }

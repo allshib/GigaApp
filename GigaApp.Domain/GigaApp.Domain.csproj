@@ -10,8 +10,4 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\GigaApp.Storage\GigaApp.Storage.csproj" />
-  </ItemGroup>
-
 </Project>

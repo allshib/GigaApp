@@ -1,3 +1,4 @@
+using GigaApp.Domain.Authorization;
 using GigaApp.Domain.UseCases.CreateTopic;
 using GigaApp.Domain.UseCases.GetForums;
 using GigaApp.Storage;
@@ -11,8 +12,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IGetForumsUseCase, GetForumUseCase>();
+//builder.Services.AddScoped<IGetForumsUseCase, GetForumUseCase>();
 builder.Services.AddScoped<ICreateTopicUseCase, CreateTopicUseCase>();
+builder.Services.AddScoped<ICreateTopicStorage>();
+builder.Services.AddScoped<IIntentionResolver, TopicIntetntionResolver>();
+builder.Services.AddScoped<IIntentionManager, IntentionManager>();
+
+builder.Services.AddScoped<ICreateTopicStorage>();
 
 var connectionString = builder.Configuration.GetConnectionString("MsSql");
 
