@@ -17,9 +17,12 @@ namespace GigaApp.Domain.UseCases.CreateTopic
     {
         private readonly IIntentionManager intentionManager;
         private readonly ICreateTopicStorage storage;
-        private readonly IdentityProvider identityProvider;
+        private readonly IIdentityProvider identityProvider;
 
-        public CreateTopicUseCase(IIntentionManager intentionManager,ICreateTopicStorage storage, IdentityProvider identityProvider)
+        public CreateTopicUseCase(
+            IIntentionManager intentionManager,
+            ICreateTopicStorage storage, 
+            IIdentityProvider identityProvider)
         {
             this.intentionManager = intentionManager;
             this.storage = storage;

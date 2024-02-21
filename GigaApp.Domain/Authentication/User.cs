@@ -2,13 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GigaApp.Domain.Authentication
 {
-    public class IdentityProvider : IIdentityProvider
+    public class User : IIdentity
     {
-        public IIdentity Current => new User(Guid.Parse("ca4659c5-b98f-4c54-b746-dde6a98d9674"));
+        public User(Guid userId) {
+            UserId = userId;
+        }
+        public Guid UserId { get; }
     }
 }

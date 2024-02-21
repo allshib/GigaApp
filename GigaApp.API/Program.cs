@@ -1,7 +1,11 @@
+using GigaApp.Domain.Authentication;
 using GigaApp.Domain.Authorization;
+using GigaApp.Domain.Identity;
+using GigaApp.Domain.UseCases;
 using GigaApp.Domain.UseCases.CreateTopic;
 using GigaApp.Domain.UseCases.GetForums;
 using GigaApp.Storage;
+using GigaApp.Storage.Storages;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -12,13 +16,22 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddScoped<IGetForumsUseCase, GetForumUseCase>();
+builder.Services.AddScoped<IGetForumsUseCase, GetForumUseCase>();
 builder.Services.AddScoped<ICreateTopicUseCase, CreateTopicUseCase>();
-builder.Services.AddScoped<ICreateTopicStorage>();
+
+builder.Services.AddScoped<ICreateTopicStorage, CreateTopicStorage>();
+builder.Services.AddScoped<IGetForumsStorage, GetForumsStorage>();
+
 builder.Services.AddScoped<IIntentionResolver, TopicIntetntionResolver>();
 builder.Services.AddScoped<IIntentionManager, IntentionManager>();
 
-builder.Services.AddScoped<ICreateTopicStorage>();
+builder.Services.AddScoped<IIdentityProvider, IdentityProvider>();
+
+builder.Services.AddScoped<IGuidFactory, GuidFactory>();
+builder.Services.AddScoped<IMomentProvider, MomentProvider>();
+
+
+
 
 var connectionString = builder.Configuration.GetConnectionString("MsSql");
 

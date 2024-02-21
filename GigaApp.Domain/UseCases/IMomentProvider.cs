@@ -11,7 +11,7 @@ namespace GigaApp.Domain.UseCases
         DateTimeOffset Now { get; }
     }
 
-    public interface MomentProvider : IMomentProvider
+    public class MomentProvider : IMomentProvider
     {
         public DateTimeOffset Now => DateTimeOffset.Now;
     }

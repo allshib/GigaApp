@@ -35,7 +35,7 @@ namespace GigaApp.Domain.Tests
                         s.ForumExists(It.IsAny<Guid>(), It.IsAny<CancellationToken>()));
 
             var identity = new Mock<IIdentity>();
-            var identityProvider = new Mock<IdentityProvider>();
+            var identityProvider = new Mock<IIdentityProvider>();
             identityProvider.Setup(x => x.Current).Returns(identity.Object);
             getCurrentIdSetup = identity.Setup(x => x.UserId);
 
