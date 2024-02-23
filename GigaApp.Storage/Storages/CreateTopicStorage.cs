@@ -1,6 +1,7 @@
 ﻿using GigaApp.Domain.UseCases;
 using GigaApp.Domain.UseCases.CreateTopic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,18 @@ namespace GigaApp.Storage.Storages
 {
     internal class CreateTopicStorage : ICreateTopicStorage
     {
+        private readonly IMemoryCache cache;
         private readonly IGuidFactory guidFactory;
         private readonly IMomentProvider momentProvider;
         private readonly ForumDbContext dbContext;
 
         public CreateTopicStorage(
+            IMemoryCache cache,
             IGuidFactory guidFactory,
             IMomentProvider momentProvider,
             ForumDbContext forumDbContext)
         {
+            this.cache = cache;
             this.guidFactory = guidFactory;
             this.momentProvider = momentProvider;
             this.dbContext = forumDbContext;

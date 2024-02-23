@@ -3,6 +3,7 @@ using GigaApp.Domain.Authorization;
 using GigaApp.Domain.Exceptions;
 using GigaApp.Domain.Identity;
 using GigaApp.Domain.Models;
+using GigaApp.Domain.UseCases.GetForums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,17 +20,20 @@ namespace GigaApp.Domain.UseCases.CreateTopic
     {
         private readonly IIntentionManager intentionManager;
         private readonly ICreateTopicStorage storage;
+        private readonly IGetForumsStorage getForumsStorage;
         private readonly IIdentityProvider identityProvider;
         private readonly IValidator<CreateTopicCommand> validator;
 
         public CreateTopicUseCase(
             IIntentionManager intentionManager,
-            ICreateTopicStorage storage, 
+            ICreateTopicStorage createTopicstorage, 
+            IGetForumsStorage getForumsStorage,
             IIdentityProvider identityProvider,
             IValidator<CreateTopicCommand> validator)
         {
             this.intentionManager = intentionManager;
-            this.storage = storage;
+            this.storage = createTopicstorage;
+            this.getForumsStorage = getForumsStorage;
             this.identityProvider = identityProvider;
             this.validator = validator;
         }
@@ -40,11 +44,8 @@ namespace GigaApp.Domain.UseCases.CreateTopic
 
             intentionManager.ThrowIfForbidden(TopicIntention.Create);
 
-            var forumExists = await storage.ForumExists(command.ForumId, cancellationToken);
-            if (!forumExists)
-            {
-                throw new ForumNotFoundException(command.ForumId);
-            }
+            await getForumsStorage.ThrowIfForumWasNotFound(command.ForumId, cancellationToken);
+
             
             return await storage.CreateTopic(command.ForumId, identityProvider.Current.UserId, command.Title, cancellationToken);
         }

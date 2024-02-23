@@ -1,6 +1,7 @@
 using GigaApp.API.Models;
 using GigaApp.Domain.UseCases.CreateTopic;
 using GigaApp.Domain.UseCases.GetForums;
+using GigaApp.Domain.UseCases.GetTopics;
 using Microsoft.AspNetCore.Mvc;
 using Topic = GigaApp.API.Models.Topic;
 
@@ -25,6 +26,30 @@ namespace GigaApp.API.Controllers
             var forums = await useCase.Execute(cancellationToken);
 
             return Ok(forums.Select(x => new GigaApp.API.Models.Forum { Id = x.Id, Title = x.Title }));
+        }
+
+        [HttpGet("{forumId:guid}/topics")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(410)]
+        [ProducesResponseType(200)]
+
+        public async Task<IActionResult> GetTopics(
+            [FromRoute]  Guid forumId, 
+            [FromQuery] int skip, 
+            [FromQuery] int take, 
+            [FromServices] IGetTopicsUseCase useCase, 
+            CancellationToken cancellationToken)
+        {
+            var (resources, total) = await useCase.Execute(new GetTopicsQuery(forumId, skip, take), cancellationToken);
+
+            return Ok(new { resources = resources.Select(x=> new Topic
+                {
+                    Id = x.Id,
+                    CreatedAt = x.CreatedAt,
+                    Title = x.Title
+                }), 
+                total});
+
         }
 
 

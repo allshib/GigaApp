@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GigaApp.Domain.Exceptions
+namespace GigaApp.Domain.UseCases.GetTopics
 {
-    public enum ErrorCode
-    {
-        Gone = 410,
-    }
+    public record GetTopicsQuery(Guid ForumId, int Skip, int Take);
+    
 }

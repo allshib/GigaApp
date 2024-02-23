@@ -10,6 +10,9 @@ namespace GigaApp.Storage
 
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset? UpdatedAt { get; set; }
+
+
+        [MaxLength(2500)]
         public required string Text { get; set; }
 
         public Guid UserId { get; set; }

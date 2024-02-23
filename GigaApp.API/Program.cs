@@ -53,3 +53,5 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.Services.GetRequiredService<ForumDbContext>().Database.Migrate();
 app.Run();
+
+public partial class Program { }

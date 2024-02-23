@@ -16,14 +16,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{1736E5
 		docker-compose.yaml = docker-compose.yaml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GigaApp.Domain.DependencyInjection", "GigaApp.Domain.DependencyInjection\GigaApp.Domain.DependencyInjection.csproj", "{4C933AFB-63CB-41EE-A87D-2A1CB7BAF8B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GigaApp.Domain.DependencyInjection", "GigaApp.Domain.DependencyInjection\GigaApp.Domain.DependencyInjection.csproj", "{4C933AFB-63CB-41EE-A87D-2A1CB7BAF8B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GigaApp.Storage.DependencyInjection", "GigaApp.Storage.DependencyInjection\GigaApp.Storage.DependencyInjection.csproj", "{5B939FA2-98A9-435E-85BD-1CBB82558D1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GigaApp.Storage.DependencyInjection", "GigaApp.Storage.DependencyInjection\GigaApp.Storage.DependencyInjection.csproj", "{5B939FA2-98A9-435E-85BD-1CBB82558D1B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-items", "solution-items", "{24517E81-D667-4AF9-93DF-73E49C8B8E00}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GigaApp.E2E", "GigaApp.E2E\GigaApp.E2E.csproj", "{BAF9DB5A-1364-461D-8792-C9D72A7BCB6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{5B939FA2-98A9-435E-85BD-1CBB82558D1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B939FA2-98A9-435E-85BD-1CBB82558D1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B939FA2-98A9-435E-85BD-1CBB82558D1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAF9DB5A-1364-461D-8792-C9D72A7BCB6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAF9DB5A-1364-461D-8792-C9D72A7BCB6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAF9DB5A-1364-461D-8792-C9D72A7BCB6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAF9DB5A-1364-461D-8792-C9D72A7BCB6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

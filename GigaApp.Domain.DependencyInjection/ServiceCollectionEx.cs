@@ -6,6 +6,7 @@ using GigaApp.Domain.UseCases.GetForums;
 using GigaApp.Domain.UseCases;
 using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
+using GigaApp.Domain.UseCases.GetTopics;
 
 namespace GigaApp.Domain.DependencyInjection
 {
@@ -14,7 +15,8 @@ namespace GigaApp.Domain.DependencyInjection
         public static IServiceCollection AddForumDomain(this IServiceCollection services) {
             services
                 .AddScoped<IGetForumsUseCase, GetForumUseCase>()
-                .AddScoped<ICreateTopicUseCase, CreateTopicUseCase>();
+                .AddScoped<ICreateTopicUseCase, CreateTopicUseCase>()
+                .AddScoped<IGetTopicsUseCase, GetTopicsUseCase>();
 
             services
                 .AddScoped<IIntentionResolver, TopicIntetntionResolver>()
@@ -25,6 +27,7 @@ namespace GigaApp.Domain.DependencyInjection
                 .AddScoped<IGuidFactory, GuidFactory>()
                 .AddScoped<IMomentProvider, MomentProvider>()
                 .AddValidatorsFromAssemblyContaining<GigaApp.Domain.Models.Forum>(includeInternalTypes: true);
+
 
             return services;
         }

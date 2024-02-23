@@ -40,7 +40,7 @@ public class ErrorHandlingMiddleware
                 ValidationException => StatusCodes.Status400BadRequest,
                 DomainException domainException => domainException.ErrorCode switch
                 {
-                    ErrorCode.Gone => StatusCodes.Status410Gone,
+                    DomainErrorCode.Gone => StatusCodes.Status410Gone,
                     _ => StatusCodes.Status500InternalServerError
                 },
                 _ => StatusCodes.Status500InternalServerError
