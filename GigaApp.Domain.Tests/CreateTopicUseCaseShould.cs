@@ -1,4 +1,6 @@
 using FluentAssertions;
+using FluentValidation;
+using FluentValidation.Results;
 using GigaApp.Domain.Authorization;
 using GigaApp.Domain.Exceptions;
 using GigaApp.Domain.Identity;
@@ -43,8 +45,13 @@ namespace GigaApp.Domain.Tests
 
             intentionIsAllowedSetup = intentionManager.Setup(x => x.IsAllowed(It.IsAny<TopicIntention>()));
 
+            var validator = new Mock<IValidator<CreateTopicCommand>>();
 
-            sut = new CreateTopicUseCase(intentionManager.Object, storage.Object, identityProvider.Object);
+            validator.Setup(v => v.ValidateAsync(It.IsAny<CreateTopicCommand>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new ValidationResult());
+            
+
+            sut = new CreateTopicUseCase(intentionManager.Object, storage.Object, identityProvider.Object, validator.Object);
         }
 
         [Fact]
@@ -55,7 +62,7 @@ namespace GigaApp.Domain.Tests
             var forumId = Guid.NewGuid();
             var userId = Guid.NewGuid();
 
-            await sut.Invoking(s => s.Execute(forumId, "Some Topic", CancellationToken.None))
+            await sut.Invoking(s => s.Execute(new CreateTopicCommand(forumId, "Some Topic"), CancellationToken.None))
                 .Should().ThrowAsync<ForumNotFoundException>();
 
             storage.Verify(s => s.ForumExists(forumId, It.IsAny<CancellationToken>()));
@@ -75,7 +82,7 @@ namespace GigaApp.Domain.Tests
             var expected = new Models.Topic { Title = title };
             createTopicSetup.ReturnsAsync(expected);
 
-            var actual = await sut.Execute(forumId, title, CancellationToken.None);
+            var actual = await sut.Execute(new CreateTopicCommand(forumId, title), CancellationToken.None);
 
             storage.Verify(x =>
                 x.CreateTopic(forumId, userId, title, It.IsAny<CancellationToken>()), Times.Once);
@@ -86,7 +93,7 @@ namespace GigaApp.Domain.Tests
         {
             var forumId = Guid.NewGuid();
             intentionIsAllowedSetup.Returns(false);
-            await sut.Invoking(s => s.Execute(forumId, "WharEver", CancellationToken.None))
+            await sut.Invoking(s => s.Execute(new CreateTopicCommand(forumId, "WharEver"), CancellationToken.None))
                 .Should().ThrowAsync<IntetntionManagerExeption>();
             intentionManager.Verify(x => x.IsAllowed(TopicIntention.Create));
         }

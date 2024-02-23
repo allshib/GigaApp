@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GigaApp.Storage.Storages
 {
-    public class GetForumsStorage : IGetForumsStorage
+    internal class GetForumsStorage : IGetForumsStorage
     {
         private readonly ForumDbContext dbContext;
 

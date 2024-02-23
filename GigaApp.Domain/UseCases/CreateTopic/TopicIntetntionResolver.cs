@@ -11,7 +11,7 @@ namespace GigaApp.Domain.UseCases.CreateTopic
     /// <summary>
     /// Разрешения, связанные с Topic
     /// </summary>
-    public class TopicIntetntionResolver : IIntentionResolver<TopicIntention>
+    internal class TopicIntetntionResolver : IIntentionResolver<TopicIntention>
     {
         public bool IsAllowed(IIdentity subject, TopicIntention intention) => intention switch
         {

@@ -13,7 +13,7 @@ namespace GigaApp.Domain.Authorization
         bool IsAllowed<TIntention>(TIntention intention) where TIntention : struct;
         bool IsAllowed<TIntention, TObject>(TIntention intention, TObject target) where TIntention : struct;
     }
-    public class IntentionManager : IIntentionManager
+    internal class IntentionManager : IIntentionManager
     {
         private readonly IEnumerable<IIntentionResolver> resolvers;
         private readonly IIdentityProvider identityProvider;
@@ -36,7 +36,7 @@ namespace GigaApp.Domain.Authorization
         }
     }
 
-    public static class IntetntionManagerExtensions
+    internal static class IntetntionManagerExtensions
     {
         public static void ThrowIfForbidden<TIntetntion>(this IIntentionManager intetManager, TIntetntion intetntion) 
             where TIntetntion : struct

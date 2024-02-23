@@ -1,11 +1,7 @@
 using GigaApp.API.Models;
-using GigaApp.Domain.Exceptions;
-using GigaApp.Domain.Models;
 using GigaApp.Domain.UseCases.CreateTopic;
 using GigaApp.Domain.UseCases.GetForums;
-using GigaApp.Storage;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Topic = GigaApp.API.Models.Topic;
 
 namespace GigaApp.API.Controllers
@@ -33,6 +29,7 @@ namespace GigaApp.API.Controllers
 
 
         [HttpPost("{forumId:guid}/topics")]
+        [ProducesResponseType(400)]
         [ProducesResponseType(403)]
         [ProducesResponseType(410)]
         [ProducesResponseType(201, Type = typeof(Topic))]
@@ -41,26 +38,17 @@ namespace GigaApp.API.Controllers
             [FromServices] ICreateTopicUseCase useCase,
             CancellationToken cancellationToken)
         {
-            try
-            {
-                var topic = await useCase.Execute(forumId, createTopic.Title, cancellationToken);
 
-                return CreatedAtRoute(nameof(GetForums), new Topic
-                {
-                    Id = topic.Id,
-                    Title = topic.Title,
-                    CreatedAt = DateTimeOffset.Now,
-                });
-            }
-            catch (Exception ex)
+            var command = new CreateTopicCommand(forumId, createTopic.Title);
+            var topic = await useCase.Execute(command, cancellationToken);
+
+            return CreatedAtRoute(nameof(GetForums), new Topic
             {
-                return ex switch
-                {
-                    IntetntionManagerExeption => Forbid(),
-                    ForumNotFoundException => StatusCode(StatusCodes.Status410Gone),
-                    _ => StatusCode(StatusCodes.Status500InternalServerError)
-                };
-            }
+                Id = topic.Id,
+                Title = topic.Title,
+                CreatedAt = topic.CreatedAt,
+            });
+
         }
     }
 }

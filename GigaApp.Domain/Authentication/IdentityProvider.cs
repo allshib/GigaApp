@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GigaApp.Domain.Authentication
 {
-    public class IdentityProvider : IIdentityProvider
+    internal class IdentityProvider : IIdentityProvider
     {
         public IIdentity Current => new User(Guid.Parse("ca4659c5-b98f-4c54-b746-dde6a98d9674"));
     }

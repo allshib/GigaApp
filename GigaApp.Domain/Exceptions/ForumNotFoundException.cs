@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GigaApp.Domain.Exceptions
+namespace GigaApp.Domain.Exceptions;
+
+public class ForumNotFoundException: DomainException
 {
-    public class ForumNotFoundException: Exception
-    {
-        public ForumNotFoundException(Guid forumId) : base($"Forum with id {forumId} is not found!") { }
-    }
+    public ForumNotFoundException(Guid forumId) : base(ErrorCode.Gone, $"Forum with id {forumId} is not found!") { }
 }
+

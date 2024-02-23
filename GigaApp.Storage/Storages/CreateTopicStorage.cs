@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GigaApp.Storage.Storages
 {
-    public class CreateTopicStorage : ICreateTopicStorage
+    internal class CreateTopicStorage : ICreateTopicStorage
     {
         private readonly IGuidFactory guidFactory;
         private readonly IMomentProvider momentProvider;

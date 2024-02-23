@@ -1,10 +1,12 @@
-﻿using GigaApp.Domain.Authorization;
+﻿using FluentValidation;
+using GigaApp.Domain.Authorization;
 using GigaApp.Domain.Exceptions;
 using GigaApp.Domain.Identity;
 using GigaApp.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
@@ -13,33 +15,38 @@ using Topic = GigaApp.Domain.Models.Topic;
 
 namespace GigaApp.Domain.UseCases.CreateTopic
 {
-    public class CreateTopicUseCase : ICreateTopicUseCase
+    internal class CreateTopicUseCase : ICreateTopicUseCase
     {
         private readonly IIntentionManager intentionManager;
         private readonly ICreateTopicStorage storage;
         private readonly IIdentityProvider identityProvider;
+        private readonly IValidator<CreateTopicCommand> validator;
 
         public CreateTopicUseCase(
             IIntentionManager intentionManager,
             ICreateTopicStorage storage, 
-            IIdentityProvider identityProvider)
+            IIdentityProvider identityProvider,
+            IValidator<CreateTopicCommand> validator)
         {
             this.intentionManager = intentionManager;
             this.storage = storage;
             this.identityProvider = identityProvider;
+            this.validator = validator;
         }
 
-        public async Task<Topic> Execute(Guid forumId, string title, CancellationToken cancellationToken)
+        public async Task<Topic> Execute(CreateTopicCommand command, CancellationToken cancellationToken)
         {
+            await validator.ValidateAndThrowAsync(command, cancellationToken);
+
             intentionManager.ThrowIfForbidden(TopicIntention.Create);
 
-            var forumExists = await storage.ForumExists(forumId, cancellationToken);
+            var forumExists = await storage.ForumExists(command.ForumId, cancellationToken);
             if (!forumExists)
             {
-                throw new ForumNotFoundException(forumId);
+                throw new ForumNotFoundException(command.ForumId);
             }
             
-            return await storage.CreateTopic(forumId, identityProvider.Current.UserId, title, cancellationToken);
+            return await storage.CreateTopic(command.ForumId, identityProvider.Current.UserId, command.Title, cancellationToken);
         }
     }
 }

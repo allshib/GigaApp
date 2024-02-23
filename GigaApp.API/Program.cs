@@ -1,3 +1,4 @@
+using FluentValidation;
 using GigaApp.Domain.Authentication;
 using GigaApp.Domain.Authorization;
 using GigaApp.Domain.Identity;
@@ -7,36 +8,32 @@ using GigaApp.Domain.UseCases.GetForums;
 using GigaApp.Storage;
 using GigaApp.Storage.Storages;
 using Microsoft.EntityFrameworkCore;
-
+using Serilog;
+using Serilog.Filters;
+using GigaApp.Domain.DependencyInjection;
+using GigaApp.Storage.DependencyInjection;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddLogging(b=>b.AddSerilog(new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .Enrich.WithProperty("Application", "GigaApp.API")
+    .Enrich.WithProperty("Environment", builder.Environment.EnvironmentName)
+    .WriteTo.Logger(lc=> lc.Filter.ByExcluding(Matching.FromSource("Microsoft")).WriteTo.OpenSearch(
+        "http://localhost:9200",
+        "forum-logs-{0:yyyy.MM.dd}"
+        ))
+    .WriteTo.Logger(lc=>lc.Filter.ByExcluding(Matching.FromSource("Microsoft")).WriteTo.Console())
+    .CreateLogger()));
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddScoped<IGetForumsUseCase, GetForumUseCase>();
-builder.Services.AddScoped<ICreateTopicUseCase, CreateTopicUseCase>();
-
-builder.Services.AddScoped<ICreateTopicStorage, CreateTopicStorage>();
-builder.Services.AddScoped<IGetForumsStorage, GetForumsStorage>();
-
-builder.Services.AddScoped<IIntentionResolver, TopicIntetntionResolver>();
-builder.Services.AddScoped<IIntentionManager, IntentionManager>();
-
-builder.Services.AddScoped<IIdentityProvider, IdentityProvider>();
-
-builder.Services.AddScoped<IGuidFactory, GuidFactory>();
-builder.Services.AddScoped<IMomentProvider, MomentProvider>();
-
-
-
-
 var connectionString = builder.Configuration.GetConnectionString("MsSql");
 
-builder.Services.AddDbContext<ForumDbContext>(options => 
-options.UseSqlServer(connectionString, b=> b.MigrationsAssembly("GigaApp.API")), ServiceLifetime.Singleton);
+builder.Services.AddForumStorage(connectionString);
+builder.Services.AddForumDomain();
 
 
 var app = builder.Build();
@@ -51,6 +48,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.Services.GetRequiredService<ForumDbContext>().Database.Migrate();
 app.Run();

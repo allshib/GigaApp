@@ -9,7 +9,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GigaApp.Storage", "GigaApp.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GigaApp.API", "GigaApp.API\GigaApp.API.csproj", "{A0759D16-B1B1-4C93-BD55-6831B313BC56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GigaApp.Domain.Tests", "GigaApp.Domain.Tests\GigaApp.Domain.Tests.csproj", "{EC810A10-F0D5-4AE9-843B-27D83361A0C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GigaApp.Domain.Tests", "GigaApp.Domain.Tests\GigaApp.Domain.Tests.csproj", "{EC810A10-F0D5-4AE9-843B-27D83361A0C2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{1736E55C-E664-4D27-998F-630167CDA0C3}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yaml = docker-compose.yaml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GigaApp.Domain.DependencyInjection", "GigaApp.Domain.DependencyInjection\GigaApp.Domain.DependencyInjection.csproj", "{4C933AFB-63CB-41EE-A87D-2A1CB7BAF8B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GigaApp.Storage.DependencyInjection", "GigaApp.Storage.DependencyInjection\GigaApp.Storage.DependencyInjection.csproj", "{5B939FA2-98A9-435E-85BD-1CBB82558D1B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-items", "solution-items", "{24517E81-D667-4AF9-93DF-73E49C8B8E00}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +47,14 @@ Global
 		{EC810A10-F0D5-4AE9-843B-27D83361A0C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC810A10-F0D5-4AE9-843B-27D83361A0C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC810A10-F0D5-4AE9-843B-27D83361A0C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C933AFB-63CB-41EE-A87D-2A1CB7BAF8B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C933AFB-63CB-41EE-A87D-2A1CB7BAF8B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C933AFB-63CB-41EE-A87D-2A1CB7BAF8B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C933AFB-63CB-41EE-A87D-2A1CB7BAF8B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B939FA2-98A9-435E-85BD-1CBB82558D1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B939FA2-98A9-435E-85BD-1CBB82558D1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B939FA2-98A9-435E-85BD-1CBB82558D1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B939FA2-98A9-435E-85BD-1CBB82558D1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -11,7 +11,7 @@ using Forum = GigaApp.Domain.Models.Forum;
 
 namespace GigaApp.Domain.UseCases.GetForums
 {
-    public class GetForumUseCase : IGetForumsUseCase
+    internal class GetForumUseCase : IGetForumsUseCase
     {
         private readonly IGetForumsStorage getForumsStorage;
 
