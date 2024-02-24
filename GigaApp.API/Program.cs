@@ -12,6 +12,7 @@ using Serilog;
 using Serilog.Filters;
 using GigaApp.Domain.DependencyInjection;
 using GigaApp.Storage.DependencyInjection;
+using GigaApp.API.Mapping;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,8 +33,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("MsSql");
 
-builder.Services.AddForumStorage(connectionString);
-builder.Services.AddForumDomain();
+builder.Services
+    .AddForumStorage(connectionString)
+    .AddForumDomain();
+
+builder.Services
+    .AddAutoMapper(config => config.AddProfile<ApiProfile>());
 
 
 var app = builder.Build();
