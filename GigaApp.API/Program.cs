@@ -1,33 +1,15 @@
-using FluentValidation;
-using GigaApp.Domain.Authentication;
-using GigaApp.Domain.Authorization;
-using GigaApp.Domain.Identity;
-using GigaApp.Domain.UseCases;
-using GigaApp.Domain.UseCases.CreateTopic;
-using GigaApp.Domain.UseCases.GetForums;
 using GigaApp.Storage;
-using GigaApp.Storage.Storages;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
-using Serilog.Filters;
 using GigaApp.Domain.DependencyInjection;
 using GigaApp.Storage.DependencyInjection;
-using GigaApp.API.Mapping;
 using AutoMapper;
+using System.Reflection;
+using GigaApp.API.DependencyInjection;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddLogging(b=>b.AddSerilog(new LoggerConfiguration()
-    .MinimumLevel.Debug()
-    .Enrich.WithProperty("Application", "GigaApp.API")
-    .Enrich.WithProperty("Environment", builder.Environment.EnvironmentName)
-    .WriteTo.Logger(lc=> lc.Filter.ByExcluding(Matching.FromSource("Microsoft")).WriteTo.OpenSearch(
-        "http://localhost:9200",
-        "forum-logs-{0:yyyy.MM.dd}"
-        ))
-    .WriteTo.Logger(lc=>lc.Filter.ByExcluding(Matching.FromSource("Microsoft")).WriteTo.Console())
-    .CreateLogger()));
+builder.Services.AddApiLogging(builder.Configuration, builder.Environment);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -39,7 +21,7 @@ builder.Services
     .AddForumDomain();
 
 builder.Services
-    .AddAutoMapper(config => config.AddProfile<ApiProfile>());
+    .AddAutoMapper(config => config.AddMaps(Assembly.GetExecutingAssembly()));
 
 
 var app = builder.Build();

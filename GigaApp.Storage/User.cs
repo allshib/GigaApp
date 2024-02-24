@@ -11,6 +11,14 @@ namespace GigaApp.Storage
         [MaxLength(20)]
         public required string Login { get; set; }
 
+
+        [MaxLength(120)]
+        public required string Salt { get; set; }
+
+        [MaxLength(300)]
+        public required string PasswordHash { get; set; }
+
+
         [InverseProperty(nameof(Topic.Author))]
         public ICollection<Topic>? Topics { get; set; }
 

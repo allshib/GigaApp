@@ -22,6 +22,7 @@ namespace GigaApp.E2E
         [Fact]
         public async Task ReturnNewForum()
         {
+            const string forumTitle = "8e72337e-b10a-4a34-b4eb-63b1b1e1c5d0";
             using var hhtpClient = factory.CreateClient();
 
             using var getinitForumResponse = await hhtpClient.GetAsync("forum");
@@ -31,13 +32,13 @@ namespace GigaApp.E2E
             initialForums
                 .Should().NotBeNull()
                 .And.Subject.As<Forum[]>()
-                .Should().BeEmpty();
+                .Should().NotContain(x => x.Title == forumTitle);
 
 
 
             using var response = await hhtpClient.PostAsync(
                 "forum", 
-                JsonContent.Create(new {title = "Test"}));
+                JsonContent.Create(new {title = forumTitle }));
 
             response.Invoking(r => r.EnsureSuccessStatusCode()).Should().NotThrow();
 
@@ -47,7 +48,7 @@ namespace GigaApp.E2E
             forum
                 .Should().NotBeNull()
                 .And.Subject.As<Forum>()
-                .Title.Should().Be("Test");
+                .Title.Should().Be(forumTitle);
 
             forum.Id.Should().NotBeEmpty();
 

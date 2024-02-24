@@ -1,29 +1,27 @@
 ﻿using AutoMapper;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace GigaApp.E2E
 {
-    public class MapperConfigurationShould : IClassFixture<ForumApiApplicationFactory>
+    public class MapperConfigurationShould : IClassFixture<WebApplicationFactory<Program>>
     {
-        private readonly ForumApiApplicationFactory factory;
+        private readonly WebApplicationFactory<Program> factory;
 
-        public MapperConfigurationShould(ForumApiApplicationFactory factory)
+        public MapperConfigurationShould(WebApplicationFactory<Program> factory)
         {
             this.factory = factory;
         }
         [Fact]
         public void BeValid()
         {
-            factory.Services
+            var config = factory.Services
                 .GetRequiredService<IMapper>()
-                .ConfigurationProvider.Invoking(x => x.AssertConfigurationIsValid())
-                .Should().NotThrow();
+                .ConfigurationProvider;
+            config.Invoking(x => x.AssertConfigurationIsValid())
+            .Should().NotThrow();
         }
     }
 }
