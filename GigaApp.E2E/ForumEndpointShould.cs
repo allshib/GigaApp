@@ -59,7 +59,7 @@ namespace GigaApp.E2E
             forums
                 .Should().NotBeNull()
                 .And.Subject.As<Forum[]>()
-                .Should().Contain(f => f.Title == "Test");
+                .Should().Contain(f => f.Title == forumTitle);
         }
 
 
