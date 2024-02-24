@@ -7,6 +7,7 @@ using GigaApp.Domain.UseCases;
 using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
 using GigaApp.Domain.UseCases.GetTopics;
+using GigaApp.Domain.UseCases.CreateForum;
 
 namespace GigaApp.Domain.DependencyInjection
 {
@@ -16,10 +17,12 @@ namespace GigaApp.Domain.DependencyInjection
             services
                 .AddScoped<IGetForumsUseCase, GetForumUseCase>()
                 .AddScoped<ICreateTopicUseCase, CreateTopicUseCase>()
-                .AddScoped<IGetTopicsUseCase, GetTopicsUseCase>();
+                .AddScoped<IGetTopicsUseCase, GetTopicsUseCase>()
+                .AddScoped<ICreateForumUseCase, CreateForumUseCase>();
 
             services
                 .AddScoped<IIntentionResolver, TopicIntetntionResolver>()
+                .AddScoped<IIntentionResolver, ForumIntentionResolver>()
                 .AddScoped<IIntentionManager, IntentionManager>()
                 .AddScoped<IIdentityProvider, IdentityProvider>();
 
