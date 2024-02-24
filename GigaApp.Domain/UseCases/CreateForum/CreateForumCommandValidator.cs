@@ -18,7 +18,7 @@ namespace GigaApp.Domain.UseCases.CreateForum
         {
             RuleFor(c => c.Title)
                 .NotEmpty().WithErrorCode(ValidationErrorCode.Empty)
-                .MaximumLength(50).WithErrorCode(ValidationErrorCode.TooLong);
+                .MaximumLength(100).WithErrorCode(ValidationErrorCode.TooLong);
 
         }
     }

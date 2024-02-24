@@ -13,6 +13,7 @@ using Serilog.Filters;
 using GigaApp.Domain.DependencyInjection;
 using GigaApp.Storage.DependencyInjection;
 using GigaApp.API.Mapping;
+using AutoMapper;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,6 +43,13 @@ builder.Services
 
 
 var app = builder.Build();
+
+app.Services
+    .GetRequiredService<IMapper>()
+    .ConfigurationProvider
+    .AssertConfigurationIsValid();
+
+
 
 
     app.UseSwagger();
