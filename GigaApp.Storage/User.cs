@@ -13,10 +13,10 @@ namespace GigaApp.Storage
 
 
         [MaxLength(120)]
-        public required string Salt { get; set; }
+        public required byte[] Salt { get; set; }
 
-        [MaxLength(300)]
-        public required string PasswordHash { get; set; }
+        [MaxLength(32)]
+        public required byte[] PasswordHash { get; set; }
 
 
         [InverseProperty(nameof(Topic.Author))]

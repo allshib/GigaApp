@@ -8,8 +8,8 @@ namespace GigaApp.Domain.Authentication
 {
     public class RecognizedUser
     {
-        public required Guid UserId { get; set; }
-        public required string Salt {  get; set; }
-        public required string PasswordHash { get; set; }
+        public Guid UserId { get; set; }
+        public byte[] Salt {  get; set; }
+        public byte[] PasswordHash { get; set; }
     }
 }

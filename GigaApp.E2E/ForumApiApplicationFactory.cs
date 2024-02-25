@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Testcontainers.MsSql;
@@ -23,6 +24,7 @@ namespace GigaApp.E2E
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
                     ["ConnectionStrings:MsSql"] = msSqlContainer.GetConnectionString(),
+                    ["Authentication:Base64Key"] = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32))
                 })
                 .Build();
 

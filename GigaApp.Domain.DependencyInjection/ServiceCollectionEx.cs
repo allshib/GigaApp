@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
 using GigaApp.Domain.UseCases.GetTopics;
 using GigaApp.Domain.UseCases.CreateForum;
+using GigaApp.Domain.UseCases.SignOn;
+using GigaApp.Domain.UseCases.SignIn;
 
 namespace GigaApp.Domain.DependencyInjection
 {
@@ -18,13 +20,19 @@ namespace GigaApp.Domain.DependencyInjection
                 .AddScoped<IGetForumsUseCase, GetForumUseCase>()
                 .AddScoped<ICreateTopicUseCase, CreateTopicUseCase>()
                 .AddScoped<IGetTopicsUseCase, GetTopicsUseCase>()
-                .AddScoped<ICreateForumUseCase, CreateForumUseCase>();
+                .AddScoped<ICreateForumUseCase, CreateForumUseCase>()
+                .AddScoped<ISignOnUseCase, SignOnUseCase>()
+                .AddScoped<ISignInUseCase, SignInUseCase>();
 
             services
                 .AddScoped<IIntentionResolver, TopicIntetntionResolver>()
                 .AddScoped<IIntentionResolver, ForumIntentionResolver>()
                 .AddScoped<IIntentionManager, IntentionManager>()
-                .AddScoped<IIdentityProvider, IdentityProvider>();
+                .AddScoped<IIdentityProvider, IdentityProvider>()
+                .AddScoped<IPasswordManager,  PasswordManager>()
+                .AddScoped<IAuthenticationService, AuthenticationService>()
+                .AddScoped<ISymmetricDecryptor, AesSymmetricEncryptorDecryptor>()
+                .AddScoped<ISymmetricEncryptor, AesSymmetricEncryptorDecryptor>();
 
             services
                 .AddScoped<IGuidFactory, GuidFactory>()

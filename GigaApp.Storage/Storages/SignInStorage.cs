@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using GigaApp.Domain.Authentication;
+using GigaApp.Domain.UseCases.SignIn;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace GigaApp.Storage.Storages
 {
-    internal class AuthenticationStorage : IAuthenticationStorage
+    internal class SignInStorage : ISignInStorage
     {
         private readonly ForumDbContext dbContext;
         private readonly IMapper mapper;
 
-        public AuthenticationStorage(
+        public SignInStorage(
             ForumDbContext dbContext,
             IMapper mapper)
         {

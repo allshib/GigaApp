@@ -5,11 +5,15 @@ using GigaApp.Storage.DependencyInjection;
 using AutoMapper;
 using System.Reflection;
 using GigaApp.API.DependencyInjection;
+using GigaApp.API.Authentication;
+using GigaApp.Domain.Authentication;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApiLogging(builder.Configuration, builder.Environment);
+builder.Services.Configure<AuthenticationConfiguration>(builder.Configuration.GetSection("Authentication").Bind);
+builder.Services.AddScoped<IAuthTokenStorage, AuthTokenStorage>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

@@ -2,6 +2,8 @@
 using GigaApp.Domain.UseCases.CreateTopic;
 using GigaApp.Domain.UseCases.GetForums;
 using GigaApp.Domain.UseCases.GetTopics;
+using GigaApp.Domain.UseCases.SignIn;
+using GigaApp.Domain.UseCases.SignOn;
 using GigaApp.Storage.Storages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +19,9 @@ namespace GigaApp.Storage.DependencyInjection
             .AddScoped<ICreateTopicStorage, CreateTopicStorage>()
             .AddScoped<IGetForumsStorage, GetForumsStorage>()
             .AddScoped<IGetTopicsStorage, GetTopicsStorage>()
-            .AddScoped<ICreateForumStorage, CreateForumStorage>();
+            .AddScoped<ICreateForumStorage, CreateForumStorage>()
+            .AddScoped<ISignInStorage, SignInStorage>()
+            .AddScoped<ISignOnStorage, SignOnStorage>();
 
             services.AddDbContext<ForumDbContext>(options => options.UseSqlServer(connectionString, b =>
                 b.MigrationsAssembly("GigaApp.API")), ServiceLifetime.Singleton);
