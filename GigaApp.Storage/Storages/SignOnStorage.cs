@@ -26,6 +26,7 @@ namespace GigaApp.Storage.Storages
             var userId = guidFactory.Create();
             await dbContext.AddAsync(new User
             {
+                UserId = userId,
                 Login = login,
                 Salt = salt,
                 PasswordHash = hash

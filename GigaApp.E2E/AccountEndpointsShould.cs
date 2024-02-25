@@ -35,6 +35,8 @@ public class AccountEndpointsShould(ForumApiApplicationFactory factory) : IClass
         var signedInUser = await signInResponse.Content.ReadFromJsonAsync<User>();
         signedInUser!.UserId.Should().Be(createdUser!.UserId);
 
+
+
         //var createForumResponse = await httpClient.PostAsync(
         //    "forums", JsonContent.Create(new { title = "Test title" }));
         //createForumResponse.IsSuccessStatusCode.Should().BeTrue();
