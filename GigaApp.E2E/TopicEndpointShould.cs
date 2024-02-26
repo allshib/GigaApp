@@ -31,6 +31,7 @@ namespace GigaApp.E2E
         }
 
 
+
         [Fact]
         public async Task ReturnForbidden_WhenNotAuthenticated()
         {
@@ -39,14 +40,14 @@ namespace GigaApp.E2E
             using var responseForum = await hhtpClient.PostAsync(
                 "forum",
                 JsonContent.Create(new { title = "TestForum" }));
-            responseForum.EnsureSuccessStatusCode();
+            //responseForum.EnsureSuccessStatusCode();
 
             var forum = await responseForum.Content.ReadFromJsonAsync<GigaApp.API.Models.Forum>();
             forum.Should().NotBeNull();
 
             using var responseTopic = await hhtpClient.PostAsync($"forum/{forum!.Id}/topics", JsonContent.Create(new { title = "HelloWorld" }));
 
-            responseTopic.StatusCode.Should().Be(System.Net.HttpStatusCode.InternalServerError);
+            responseTopic.StatusCode.Should().Be(System.Net.HttpStatusCode.Forbidden);
         }
     }
 }

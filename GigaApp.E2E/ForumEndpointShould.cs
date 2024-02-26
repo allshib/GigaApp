@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http.Json;
 using GigaApp.API.Models;
+using System.Net.Http;
 
 namespace GigaApp.E2E
 {
@@ -19,13 +20,29 @@ namespace GigaApp.E2E
             this.factory = factory;
         }
 
+        private async Task LogOnAndLogIn(HttpClient httpClient)
+        {
+            using var signOnResponse = await httpClient.PostAsync(
+            "account", JsonContent.Create(new { login = "Test", password = "qwerty" }));
+            using var signInResponse = await httpClient.PostAsync(
+            "account/signin", JsonContent.Create(new { login = "Test", password = "qwerty" }));
+
+            IEnumerable<string> headerValues = signInResponse.Headers.GetValues("GigaApp-Auth-Token");
+            var id = headerValues.FirstOrDefault();
+
+            httpClient.DefaultRequestHeaders.Add("GigaApp-Auth-Token", id);
+
+        }
         [Fact]
         public async Task ReturnNewForum()
         {
             const string forumTitle = "8e72337e-b10a-4a34-b4eb-63b1b1e1c5d0";
-            using var hhtpClient = factory.CreateClient();
+            using var httpClient = factory.CreateClient();
 
-            using var getinitForumResponse = await hhtpClient.GetAsync("forum");
+            await LogOnAndLogIn(httpClient);
+
+
+            using var getinitForumResponse = await httpClient.GetAsync("forum");
 
             var initialForums = await getinitForumResponse.Content.ReadFromJsonAsync<Forum[]>();
 
@@ -36,7 +53,7 @@ namespace GigaApp.E2E
 
 
 
-            using var response = await hhtpClient.PostAsync(
+            using var response = await httpClient.PostAsync(
                 "forum", 
                 JsonContent.Create(new {title = forumTitle }));
 
@@ -52,7 +69,7 @@ namespace GigaApp.E2E
 
             forum.Id.Should().NotBeEmpty();
 
-            using var getForumResponse = await hhtpClient.GetAsync("forum");
+            using var getForumResponse = await httpClient.GetAsync("forum");
 
             var forums = await getForumResponse.Content.ReadFromJsonAsync<Forum[]>();
 

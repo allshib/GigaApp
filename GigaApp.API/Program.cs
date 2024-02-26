@@ -7,6 +7,7 @@ using System.Reflection;
 using GigaApp.API.DependencyInjection;
 using GigaApp.API.Authentication;
 using GigaApp.Domain.Authentication;
+using GigaApp.API.Middlewares;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -48,7 +49,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseMiddleware<ErrorHandlingMiddleware>();
+app
+    .UseMiddleware<ErrorHandlingMiddleware>()
+    .UseMiddleware<AuthenticationMiddleware>();
 
 app.Services.GetRequiredService<ForumDbContext>().Database.Migrate();
 app.Run();
