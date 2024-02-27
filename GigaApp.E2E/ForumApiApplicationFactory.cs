@@ -17,6 +17,8 @@ namespace GigaApp.E2E
     {
         private readonly MsSqlContainer msSqlContainer = new MsSqlBuilder().Build();
 
+        public ForumDbContext forumDbContext { get; private set; }
+
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
 
@@ -36,7 +38,7 @@ namespace GigaApp.E2E
         public async Task InitializeAsync()
         {
             await msSqlContainer.StartAsync();
-            var forumDbContext = new ForumDbContext(new DbContextOptionsBuilder<ForumDbContext>()
+            forumDbContext = new ForumDbContext(new DbContextOptionsBuilder<ForumDbContext>()
                 .UseSqlServer(msSqlContainer.GetConnectionString()).Options);
 
             forumDbContext.Database.Migrate();

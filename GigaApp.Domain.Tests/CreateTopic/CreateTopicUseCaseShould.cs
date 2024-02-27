@@ -72,8 +72,9 @@ namespace GigaApp.Domain.Tests
             var forumId = Guid.NewGuid();
             var userId = Guid.NewGuid();
 
-            await sut.Invoking(s => s.Execute(new CreateTopicCommand(forumId, "Some Topic"), CancellationToken.None))
-                .Should().ThrowAsync<ForumNotFoundException>();
+            (await sut.Invoking(s => s.Execute(new CreateTopicCommand(forumId, "Some Topic"), CancellationToken.None))
+                .Should().ThrowAsync<ForumNotFoundException>()).Which.ErrorCode.Should().Be(DomainErrorCode.Gone);
+                ;
         }
 
         [Fact]
