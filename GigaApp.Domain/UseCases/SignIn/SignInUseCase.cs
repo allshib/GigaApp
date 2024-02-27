@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using FluentValidation.Results;
 using GigaApp.Domain.Authentication;
+using GigaApp.Domain.Exceptions;
 using GigaApp.Domain.Identity;
 using Microsoft.Extensions.Options;
 
@@ -35,14 +37,30 @@ namespace GigaApp.Domain.UseCases.SignIn
 
             if(recognizedUser is null)
             {
-                throw new Exception();
+                throw new ValidationException(new ValidationFailure[]
+                {
+                    new()
+                    {
+                        PropertyName = nameof(command.Login), 
+                        ErrorCode = ValidationErrorCode.Invalid, 
+                        AttemptedValue = command.Login
+                    }
+                });
             }
             var passwordMatches = passwordManager
                 .ComparePasswords(command.Password, recognizedUser.Salt, recognizedUser.PasswordHash);
 
             if (!passwordMatches)
             {
-                throw new Exception();
+                throw new ValidationException(new ValidationFailure[]
+                {
+                    new()
+                    {
+                        PropertyName = nameof(command.Password),
+                        ErrorCode = ValidationErrorCode.Invalid,
+                        AttemptedValue = command.Password
+                    }
+                });
             }
 
 
