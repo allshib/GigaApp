@@ -2,9 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using GigaApp.Storage.Mapping;
 using Testcontainers.MsSql;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace GigaApp.Storage.Tests
 {
@@ -17,6 +21,17 @@ namespace GigaApp.Storage.Tests
         {
             return new ForumDbContext(new DbContextOptionsBuilder<ForumDbContext>()
                 .UseSqlServer(msSqlContainer.GetConnectionString()).Options);
+        }
+
+        public IMapper GetMapper()
+        {
+            var config = new MapperConfiguration(cfg => cfg.AddMaps(Assembly.GetAssembly(typeof(ForumDbContext))));
+            return new Mapper(config);
+        }
+
+        public IMemoryCache GetMemoryCache()
+        {
+            return new MemoryCache(new MemoryCacheOptions());
         }
         
 
