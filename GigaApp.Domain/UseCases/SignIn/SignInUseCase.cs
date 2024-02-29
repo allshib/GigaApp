@@ -47,6 +47,7 @@ namespace GigaApp.Domain.UseCases.SignIn
                     }
                 });
             }
+            
             var passwordMatches = passwordManager
                 .ComparePasswords(command.Password, recognizedUser.Salt, recognizedUser.PasswordHash);
 
@@ -63,10 +64,11 @@ namespace GigaApp.Domain.UseCases.SignIn
                 });
             }
 
+            var sessionId = await signInStorage.CreateSession(recognizedUser.UserId, DateTimeOffset.Now + TimeSpan.FromHours(1), cancellationToken);
 
-            var token = await encryptor.Encrypt(recognizedUser.UserId.ToString(), authenticationConfiguration.Key, cancellationToken);
+            var token = await encryptor.Encrypt(sessionId.ToString(), authenticationConfiguration.Key, cancellationToken);
 
-            return (new User(recognizedUser.UserId), token);
+            return (new User(recognizedUser.UserId, sessionId), token);
         }
     }
 

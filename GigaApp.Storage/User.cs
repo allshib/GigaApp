@@ -25,5 +25,9 @@ namespace GigaApp.Storage
 
         [InverseProperty(nameof(Comment.Author))]
         public ICollection<Comment>? Comments { get; set; }
+
+
+        [InverseProperty(nameof(Session.User))]
+        public ICollection<Session> Sessions { get; set; }
     }
 }

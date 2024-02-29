@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GigaApp.Domain.UseCases.SignIn;
 
 namespace GigaApp.Domain.Authentication
 {
-    public interface IAuthenticationStorage
+    public class Session
     {
-        Task<Session?> FindSession(Guid sessionId, CancellationToken cancellationToken);
+        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
+        public DateTimeOffset ExpiresAt { get; set; }
+
     }
 }

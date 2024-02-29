@@ -24,6 +24,11 @@ namespace GigaApp.Storage.Storages
             this.mapper = mapper;
         }
 
+        public Task<Guid> CreateSession(Guid userId, DateTimeOffset expirationMoment, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<RecognizedUser?> FindUser(string login, CancellationToken cancellationToken)
         {
             return await dbContext.Users

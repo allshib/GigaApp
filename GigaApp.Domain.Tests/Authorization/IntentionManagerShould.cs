@@ -45,7 +45,7 @@ namespace GigaApp.Domain.Tests.Authorization
             var intentionProvider = new Mock<IIdentityProvider>();
             intentionProvider
                 .Setup(x => x.Current)
-                .Returns(new User(Guid.Parse("caf70cb2-2268-44cc-932a-2d35112387f5")));
+                .Returns(new User(Guid.Parse("caf70cb2-2268-44cc-932a-2d35112387f5"), Guid.Empty));
 
             var resolver = new Mock<IIntentionResolver<ForumIntention>>();
             resolver

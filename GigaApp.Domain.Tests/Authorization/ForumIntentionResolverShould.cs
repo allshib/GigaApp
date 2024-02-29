@@ -39,7 +39,7 @@ namespace GigaApp.Domain.Tests.Authorization
         public void ReturnTrue_WhenCheckingTopicCreateIntention_AndUserIsAuthenticated()
         {
             sut.IsAllowed(
-                new User(Guid.Parse("747d3fd5-0241-4b00-a970-6d4e9b3f15e1")),
+                new User(Guid.Parse("747d3fd5-0241-4b00-a970-6d4e9b3f15e1"), Guid.Empty),
                 ForumIntention.Create)
                 .Should().BeTrue();
         }
