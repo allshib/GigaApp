@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GigaApp.Domain.UseCases;
 
 namespace GigaApp.Storage.Storages
 {
@@ -15,18 +16,30 @@ namespace GigaApp.Storage.Storages
     {
         private readonly ForumDbContext dbContext;
         private readonly IMapper mapper;
+        private readonly IGuidFactory guidFactory;
 
         public SignInStorage(
             ForumDbContext dbContext,
+            IGuidFactory guidFactory,
             IMapper mapper)
         {
             this.dbContext = dbContext;
             this.mapper = mapper;
+            this.guidFactory = guidFactory;
         }
 
-        public Task<Guid> CreateSession(Guid userId, DateTimeOffset expirationMoment, CancellationToken cancellationToken)
+        public async Task<Guid> CreateSession(Guid userId, DateTimeOffset expirationMoment, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var session = new Session
+            {
+                SessionId = guidFactory.Create(),
+                UserId = userId,
+                ExpiresAt = expirationMoment
+            };
+            await dbContext.AddAsync(session);
+            await dbContext.SaveChangesAsync(cancellationToken);
+
+            return session.SessionId;
         }
 
         public async Task<RecognizedUser?> FindUser(string login, CancellationToken cancellationToken)

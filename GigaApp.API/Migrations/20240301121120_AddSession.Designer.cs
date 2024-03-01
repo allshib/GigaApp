@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GigaApp.API.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    [Migration("20240229094813_AddSession")]
+    [Migration("20240301121120_AddSession")]
     partial class AddSession
     {
         /// <inheritdoc />
@@ -89,7 +89,7 @@ namespace GigaApp.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Session");
+                    b.ToTable("Sessions");
                 });
 
             modelBuilder.Entity("GigaApp.Storage.Topic", b =>

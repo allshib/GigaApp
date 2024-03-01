@@ -29,4 +29,8 @@
     <ProjectReference Include="..\GigaApp.Domain\GigaApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SignOut\" />
+  </ItemGroup>
+
 </Project>

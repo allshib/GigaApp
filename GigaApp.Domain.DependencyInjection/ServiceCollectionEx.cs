@@ -10,19 +10,22 @@ using GigaApp.Domain.UseCases.GetTopics;
 using GigaApp.Domain.UseCases.CreateForum;
 using GigaApp.Domain.UseCases.SignOn;
 using GigaApp.Domain.UseCases.SignIn;
+using GigaApp.Domain.UseCases.SignOut;
 
 namespace GigaApp.Domain.DependencyInjection
 {
     public static class ServiceCollectionEx
     {
-        public static IServiceCollection AddForumDomain(this IServiceCollection services) {
+        public static IServiceCollection AddForumDomain(this IServiceCollection services)
+        {
             services
                 .AddScoped<IGetForumsUseCase, GetForumUseCase>()
                 .AddScoped<ICreateTopicUseCase, CreateTopicUseCase>()
                 .AddScoped<IGetTopicsUseCase, GetTopicsUseCase>()
                 .AddScoped<ICreateForumUseCase, CreateForumUseCase>()
                 .AddScoped<ISignOnUseCase, SignOnUseCase>()
-                .AddScoped<ISignInUseCase, SignInUseCase>();
+                .AddScoped<ISignInUseCase, SignInUseCase>()
+                .AddScoped<ISignOutUseCase, SignOutUseCase>();
 
             services
                 .AddScoped<IIntentionResolver, TopicIntetntionResolver>()

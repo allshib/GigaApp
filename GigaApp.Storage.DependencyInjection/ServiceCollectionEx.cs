@@ -8,6 +8,8 @@ using GigaApp.Storage.Storages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using GigaApp.Domain.Authentication;
+using GigaApp.Domain.UseCases.SignOut;
 
 namespace GigaApp.Storage.DependencyInjection
 {
@@ -21,7 +23,9 @@ namespace GigaApp.Storage.DependencyInjection
             .AddScoped<IGetTopicsStorage, GetTopicsStorage>()
             .AddScoped<ICreateForumStorage, CreateForumStorage>()
             .AddScoped<ISignInStorage, SignInStorage>()
-            .AddScoped<ISignOnStorage, SignOnStorage>();
+            .AddScoped<ISignOnStorage, SignOnStorage>()
+            .AddScoped<ISignOutStorage, SignOutStorage>()
+            .AddScoped<IAuthenticationStorage, AuthenticationStorage>();
 
             services.AddDbContext<ForumDbContext>(options => options.UseSqlServer(connectionString, b =>
                 b.MigrationsAssembly("GigaApp.API")), ServiceLifetime.Singleton);

@@ -86,7 +86,7 @@ namespace GigaApp.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Session");
+                    b.ToTable("Sessions");
                 });
 
             modelBuilder.Entity("GigaApp.Storage.Topic", b =>
