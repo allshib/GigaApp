@@ -4,10 +4,10 @@ using GigaApp.Domain.DependencyInjection;
 using GigaApp.Storage.DependencyInjection;
 using AutoMapper;
 using System.Reflection;
-using GigaApp.API.DependencyInjection;
 using GigaApp.API.Authentication;
 using GigaApp.Domain.Authentication;
 using GigaApp.API.Middlewares;
+using GigaApp.API.Monitoring;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,7 +20,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("MsSql");
-
+builder.Services.AddMetrics(false);
 builder.Services
     .AddForumStorage(connectionString)
     .AddForumDomain();
@@ -48,7 +48,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapPrometheusScrapingEndpoint();
 app
     .UseMiddleware<ErrorHandlingMiddleware>()
     .UseMiddleware<AuthenticationMiddleware>();

@@ -64,7 +64,7 @@ namespace GigaApp.Domain.UseCases.SignIn
                 });
             }
 
-            var sessionId = await signInStorage.CreateSession(recognizedUser.UserId, DateTimeOffset.Now + TimeSpan.FromHours(1), cancellationToken);
+            var sessionId = await signInStorage.CreateSession(recognizedUser.UserId, DateTimeOffset.UtcNow + TimeSpan.FromHours(1), cancellationToken);
 
             var token = await encryptor.Encrypt(sessionId.ToString(), authenticationConfiguration.Key, cancellationToken);
 

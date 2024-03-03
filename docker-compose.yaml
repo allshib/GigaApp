@@ -8,6 +8,8 @@ networks:
 
 volumes:
   giga-logs: 
+  giga-prom:
+  giga-grafana:
 
 
 services:
@@ -34,4 +36,24 @@ services:
       DISABLE_SECURITY_DASHBOARDS_PLUGIN: 'true'
     depends_on:
       - opensearch
+  prometheus:
+    container_name: "giga-prom"
+    image: 'prom/prometheus:latest'
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - giga-prom:/prometheus
+  grafana:
+   container_name: 'giga-grafana'
+   image: 'grafana/grafana'
+   restart: unless-stopped
+   environment:
+     GF_INSTALL_PLUGGINS: 'grafana-clock-panel,grafana-simple-json-datasource'
+   volumes:
+     - giga-grafana:/var/lib/grafana
+   ports:
+     - '3000:3000'
+   depends_on:
+     - prometheus
       

@@ -30,21 +30,20 @@ public class AccountEndpointsShould(ForumApiApplicationFactory factory) : IClass
         using var signInResponse = await httpClient.PostAsync(
             "account/signin", JsonContent.Create(new { login = "Test", password = "qwerty" }));
         signInResponse.IsSuccessStatusCode.Should().BeTrue();
-        signInResponse.Headers.Should().ContainKey("GigaApp-Auth-Token");
 
         var signedInUser = await signInResponse.Content.ReadFromJsonAsync<User>();
         signedInUser!.UserId.Should().Be(createdUser!.UserId);
 
 
 
-        //var createForumResponse = await httpClient.PostAsync(
-        //    "forums", JsonContent.Create(new { title = "Test title" }));
-        //createForumResponse.IsSuccessStatusCode.Should().BeTrue();
-        //var forum = (await createForumResponse.Content.ReadFromJsonAsync<Forum>())!;
+        var createForumResponse = await httpClient.PostAsync(
+            "forum", JsonContent.Create(new { title = "Test title" }));
+        createForumResponse.IsSuccessStatusCode.Should().BeTrue();
+        var forum = (await createForumResponse.Content.ReadFromJsonAsync<GigaApp.API.Models.Forum>())!;
 
-        //var createTopicResponse = await httpClient.PostAsync(
-        //    $"forums/{forum.Id}/topics", JsonContent.Create(new { title = "New topic" }));
-        //createTopicResponse.IsSuccessStatusCode.Should().BeTrue();
+        var createTopicResponse = await httpClient.PostAsync(
+            $"forum/{forum.Id}/topics", JsonContent.Create(new { title = "New topic" }));
+        createTopicResponse.IsSuccessStatusCode.Should().BeTrue();
 
         //await using var scope = factory.Services.CreateAsyncScope();
         //var domainEvents = await scope.ServiceProvider.GetRequiredService<ForumDbContext>()

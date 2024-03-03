@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{1736E55C-E664-4D27-998F-630167CDA0C3}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yaml = docker-compose.yaml
+		prometheus.yml = prometheus.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GigaApp.Domain.DependencyInjection", "GigaApp.Domain.DependencyInjection\GigaApp.Domain.DependencyInjection.csproj", "{4C933AFB-63CB-41EE-A87D-2A1CB7BAF8B8}"
@@ -27,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-items", "solution-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GigaApp.E2E", "GigaApp.E2E\GigaApp.E2E.csproj", "{BAF9DB5A-1364-461D-8792-C9D72A7BCB6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GigaApp.Storage.Tests", "GigaApp.Storage.Tests\GigaApp.Storage.Tests.csproj", "{1D894EF9-CF5D-4586-BB59-0EF5D05CF8C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GigaApp.Storage.Tests", "GigaApp.Storage.Tests\GigaApp.Storage.Tests.csproj", "{1D894EF9-CF5D-4586-BB59-0EF5D05CF8C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

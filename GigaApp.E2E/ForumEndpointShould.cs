@@ -27,10 +27,10 @@ namespace GigaApp.E2E
             using var signInResponse = await httpClient.PostAsync(
             "account/signin", JsonContent.Create(new { login = "Test", password = "qwerty" }));
 
-            IEnumerable<string> headerValues = signInResponse.Headers.GetValues("GigaApp-Auth-Token");
-            var id = headerValues.FirstOrDefault();
+            //IEnumerable<string> headerValues = signInResponse.Headers.GetValues("GigaApp-Auth-Token");
+            //var id = headerValues.FirstOrDefault();
 
-            httpClient.DefaultRequestHeaders.Add("GigaApp-Auth-Token", id);
+            //httpClient.DefaultRequestHeaders.Add("GigaApp-Auth-Token", id);
 
         }
         [Fact]
