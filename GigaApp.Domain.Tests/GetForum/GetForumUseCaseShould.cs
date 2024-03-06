@@ -1,10 +1,12 @@
 ﻿using FluentAssertions;
 using GigaApp.Domain.Models;
+using GigaApp.Domain.Monitoring;
 using GigaApp.Domain.UseCases.GetForums;
 using Moq;
 using Moq.Language.Flow;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +26,8 @@ namespace GigaApp.Domain.Tests.GetForum
             storage = new Mock<IGetForumsStorage>();
             storageSetup = storage.Setup(x => x.GetForums(It.IsAny<CancellationToken>()));
 
-            sut = new GetForumUseCase(storage.Object);
+
+            sut = new GetForumUseCase(storage.Object, null);
         }
 
 

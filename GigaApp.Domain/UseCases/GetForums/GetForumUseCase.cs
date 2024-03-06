@@ -15,9 +15,9 @@ namespace GigaApp.Domain.UseCases.GetForums
     internal class GetForumUseCase : IGetForumsUseCase
     {
         private readonly IGetForumsStorage getForumsStorage;
-        private readonly DomainMetrics metrics;
+        private readonly DomainMetrics? metrics;
         public GetForumUseCase(IGetForumsStorage getForumsStorage, 
-            DomainMetrics metrics)
+            DomainMetrics? metrics)
         {
             this.getForumsStorage = getForumsStorage;
             this.metrics = metrics;
@@ -28,12 +28,12 @@ namespace GigaApp.Domain.UseCases.GetForums
             try
             {
                 var forums = await getForumsStorage.GetForums(cancellationToken);
-                metrics.ForumsFetched(true);
+                metrics?.ForumsFetched(true);
                 return forums;
             }
             catch
             {
-                metrics.ForumsFetched(false);
+                metrics?.ForumsFetched(false);
                 throw;
             }
         }
