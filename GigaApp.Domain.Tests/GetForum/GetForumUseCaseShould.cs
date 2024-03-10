@@ -27,7 +27,7 @@ namespace GigaApp.Domain.Tests.GetForum
             storageSetup = storage.Setup(x => x.GetForums(It.IsAny<CancellationToken>()));
 
 
-            sut = new GetForumUseCase(storage.Object, null);
+            sut = new GetForumUseCase(storage.Object);
         }
 
 
@@ -40,7 +40,7 @@ namespace GigaApp.Domain.Tests.GetForum
 
             storageSetup.ReturnsAsync(forums);
 
-            var actual = await sut.Execute(CancellationToken.None);
+            var actual = await sut.Handle( new GetForumsQuery(), CancellationToken.None);
 
             actual.Should().BeSameAs(forums);
             storage.Verify(x => x.GetForums(CancellationToken.None), Times.Once);

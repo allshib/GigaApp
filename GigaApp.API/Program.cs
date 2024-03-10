@@ -20,7 +20,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("MsSql");
-builder.Services.AddMetrics(false);
+builder.Services.AddMetrics(builder.Configuration);
 builder.Services
     .AddForumStorage(connectionString)
     .AddForumDomain();

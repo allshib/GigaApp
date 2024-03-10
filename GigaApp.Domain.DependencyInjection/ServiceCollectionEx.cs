@@ -6,6 +6,7 @@ using GigaApp.Domain.UseCases.GetForums;
 using GigaApp.Domain.UseCases;
 using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
+using GigaApp.Domain.Models;
 using GigaApp.Domain.Monitoring;
 using GigaApp.Domain.UseCases.GetTopics;
 using GigaApp.Domain.UseCases.CreateForum;
@@ -20,13 +21,11 @@ namespace GigaApp.Domain.DependencyInjection
         public static IServiceCollection AddForumDomain(this IServiceCollection services)
         {
             services
-                .AddScoped<IGetForumsUseCase, GetForumUseCase>()
-                .AddScoped<ICreateTopicUseCase, CreateTopicUseCase>()
-                .AddScoped<IGetTopicsUseCase, GetTopicsUseCase>()
-                .AddScoped<ICreateForumUseCase, CreateForumUseCase>()
-                .AddScoped<ISignOnUseCase, SignOnUseCase>()
-                .AddScoped<ISignInUseCase, SignInUseCase>()
-                .AddScoped<ISignOutUseCase, SignOutUseCase>();
+                .AddMediatR(cfg => cfg
+                    .AddOpenBehavior(typeof(MetricsPipelineBehavior<,>))
+                    .AddOpenBehavior(typeof(ValidationPipelineBehavior<,>))
+                    .RegisterServicesFromAssemblyContaining<Forum>());
+                
 
             services
                 .AddScoped<IIntentionResolver, TopicIntetntionResolver>()
@@ -42,6 +41,7 @@ namespace GigaApp.Domain.DependencyInjection
                 .AddScoped<IGuidFactory, GuidFactory>()
                 .AddScoped<IMomentProvider, MomentProvider>()
                 .AddValidatorsFromAssemblyContaining<Models.Forum>(includeInternalTypes: true);
+                
 
             services
                 .AddSingleton<DomainMetrics>();

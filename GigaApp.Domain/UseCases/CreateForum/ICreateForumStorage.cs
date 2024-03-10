@@ -11,7 +11,7 @@ namespace GigaApp.Domain.UseCases.CreateForum
 {
     public interface ICreateForumStorage
     {
-        Task<Forum> Create(string title, CancellationToken cancellationToken);
+        Task<Forum?> Create(string title, CancellationToken cancellationToken);
     }
 
     

@@ -7,36 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GigaApp.Domain.Monitoring;
+using MediatR;
 using Forum = GigaApp.Domain.Models.Forum;
 
 
 namespace GigaApp.Domain.UseCases.GetForums
 {
-    internal class GetForumUseCase : IGetForumsUseCase
+    internal class GetForumUseCase(IGetForumsStorage getForumsStorage) : IRequestHandler<GetForumsQuery, IEnumerable<Forum>>
     {
-        private readonly IGetForumsStorage getForumsStorage;
-        private readonly DomainMetrics? metrics;
-        public GetForumUseCase(IGetForumsStorage getForumsStorage, 
-            DomainMetrics? metrics)
+        public async Task<IEnumerable<Forum>> Handle(GetForumsQuery request, CancellationToken cancellationToken)
         {
-            this.getForumsStorage = getForumsStorage;
-            this.metrics = metrics;
-        }
+            var forums = await getForumsStorage.GetForums(cancellationToken);
 
-        public async Task<IEnumerable<Forum>> Execute(CancellationToken cancellationToken)
-        {
-            try
-            {
-                var forums = await getForumsStorage.GetForums(cancellationToken);
-                metrics?.ForumsFetched(true);
-                return forums;
-            }
-            catch
-            {
-                metrics?.ForumsFetched(false);
-                throw;
-            }
+            return forums;
         }
-
     }
 }

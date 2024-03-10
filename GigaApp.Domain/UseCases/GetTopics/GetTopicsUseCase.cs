@@ -1,10 +1,12 @@
 ﻿using FluentValidation;
 using GigaApp.Domain.Models;
 using GigaApp.Domain.UseCases.GetForums;
+using MediatR;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace GigaApp.Domain.UseCases.GetTopics
 {
-    internal class GetTopicsUseCase : IGetTopicsUseCase
+    internal class GetTopicsUseCase : IRequestHandler<GetTopicsQuery, (IEnumerable<Topic> resources, int totalCount)>
     {
 
         private readonly IValidator<GetTopicsQuery> validator;
@@ -21,15 +23,15 @@ namespace GigaApp.Domain.UseCases.GetTopics
             this.storage = getTopicsStorage;
         }
 
-        public async Task<(IEnumerable<Topic> resources, int totalCount)> Execute(
-            GetTopicsQuery query, CancellationToken cancellationToken)
+
+
+        public async Task<(IEnumerable<Topic> resources, int totalCount)> Handle(GetTopicsQuery request, CancellationToken cancellationToken)
         {
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-            await validator.ValidateAndThrowAsync(query, cancellationToken);
+            await getForumsStorage.ThrowIfForumWasNotFound(request.ForumId, cancellationToken);
 
-            await getForumsStorage.ThrowIfForumWasNotFound(query.ForumId, cancellationToken);
-
-            return await storage.GetTopics(query.ForumId, query.Skip, query.Take, cancellationToken);
+            return await storage.GetTopics(request.ForumId, request.Skip, request.Take, cancellationToken);
         }
     }
 }

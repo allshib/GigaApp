@@ -56,7 +56,7 @@ namespace GigaApp.Domain.Tests.SignOn
 
             var command = new SignOnCommand("Test", "qwerty");
 
-            var actual = await sut.Execute(command, CancellationToken.None);
+            var actual = await sut.Handle(command, CancellationToken.None);
 
             actual.UserId.Should().Be(userId);
         }
@@ -71,7 +71,7 @@ namespace GigaApp.Domain.Tests.SignOn
 
             var command = new SignOnCommand("Test", "qwerty");
 
-           await sut.Execute(command, CancellationToken.None);
+           await sut.Handle(command, CancellationToken.None);
 
             passwordManager.Verify(x => x.GeneratePasswordParts("qwerty"), Times.Once);
 

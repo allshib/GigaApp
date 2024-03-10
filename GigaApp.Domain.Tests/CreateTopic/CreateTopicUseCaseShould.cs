@@ -60,7 +60,7 @@ namespace GigaApp.Domain.Tests
                 .ReturnsAsync(new ValidationResult());
             
 
-            sut = new(intentionManager.Object, storage.Object, getForumsStorage.Object, identityProvider.Object, validator.Object);
+            sut = new(intentionManager.Object, storage.Object, getForumsStorage.Object, identityProvider.Object, validator.Object, null);
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace GigaApp.Domain.Tests
             var forumId = Guid.NewGuid();
             var userId = Guid.NewGuid();
 
-            (await sut.Invoking(s => s.Execute(new CreateTopicCommand(forumId, "Some Topic"), CancellationToken.None))
+            (await sut.Invoking(s => s.Handle(new CreateTopicCommand(forumId, "Some Topic"), CancellationToken.None))
                 .Should().ThrowAsync<ForumNotFoundException>()).Which.ErrorCode.Should().Be(DomainErrorCode.Gone);
                 ;
         }
@@ -91,7 +91,7 @@ namespace GigaApp.Domain.Tests
             var expected = new Models.Topic { Title = title };
             createTopicSetup.ReturnsAsync(expected);
 
-            var actual = await sut.Execute(new CreateTopicCommand(forumId, title), CancellationToken.None);
+            var actual = await sut.Handle(new CreateTopicCommand(forumId, title), CancellationToken.None);
 
             storage.Verify(x =>
                 x.CreateTopic(forumId, userId, title, It.IsAny<CancellationToken>()), Times.Once);
@@ -102,7 +102,7 @@ namespace GigaApp.Domain.Tests
         {
             var forumId = Guid.NewGuid();
             intentionIsAllowedSetup.Returns(false);
-            await sut.Invoking(s => s.Execute(new CreateTopicCommand(forumId, "WharEver"), CancellationToken.None))
+            await sut.Invoking(s => s.Handle(new CreateTopicCommand(forumId, "WharEver"), CancellationToken.None))
                 .Should().ThrowAsync<IntetntionManagerExeption>();
             intentionManager.Verify(x => x.IsAllowed(TopicIntention.Create));
         }

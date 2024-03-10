@@ -1,16 +1,17 @@
-﻿using GigaApp.Domain.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using GigaApp.Domain.Models;
 using GigaApp.Domain.Monitoring;
 using MediatR;
 
-namespace GigaApp.Domain.UseCases.CreateForum
+namespace GigaApp.Domain.UseCases.GetForums
 {
-    /// <summary>
-    /// Команда создания форума
-    /// </summary>
-    /// <param name="Title"></param>
-    public record CreateForumCommand(string Title) : IRequest<Forum>, IMonitoredRequest
+    public record GetForumsQuery() : IRequest<IEnumerable<Forum>>, IMonitoredRequest
     {
-        private const string CounterName = "forum.created";
+        private const string CounterName = "forums.fetched";
 
         public void MonitorFailure(DomainMetrics metrics)
         {

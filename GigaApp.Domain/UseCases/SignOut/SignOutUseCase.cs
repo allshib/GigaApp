@@ -1,9 +1,10 @@
 ﻿using GigaApp.Domain.Authorization;
 using GigaApp.Domain.Identity;
+using MediatR;
 
 namespace GigaApp.Domain.UseCases.SignOut;
 
-public class SignOutUseCase : ISignOutUseCase
+public class SignOutUseCase : IRequestHandler<SignOutCommand>
 {
     private readonly IIdentityProvider identityProvider;
     private readonly IIntentionManager intentionManager;
@@ -18,7 +19,9 @@ public class SignOutUseCase : ISignOutUseCase
         this.intentionManager = intentionManager;
         this.storage = storage;
     }
-    public async Task Execute(SignOutCommand command, CancellationToken cancellationToken)
+
+
+    public async Task Handle(SignOutCommand request, CancellationToken cancellationToken)
     {
         intentionManager.ThrowIfForbidden(AccountIntention.SignOut);
 

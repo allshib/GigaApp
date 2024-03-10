@@ -4,6 +4,7 @@ using GigaApp.Domain.UseCases.CreateForum;
 using GigaApp.Domain.UseCases.CreateTopic;
 using GigaApp.Domain.UseCases.GetForums;
 using GigaApp.Domain.UseCases.GetTopics;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Topic = GigaApp.API.Models.Topic;
 
@@ -13,7 +14,12 @@ namespace GigaApp.API.Controllers
     [Route("[controller]")]
     public class ForumController : ControllerBase
     {
+        private readonly IMediator useCase;
 
+        public ForumController(IMediator useCase)
+        {
+            this.useCase = useCase;
+        }
 
         [HttpPost]
         [ProducesResponseType(400)]
@@ -21,13 +27,12 @@ namespace GigaApp.API.Controllers
         [ProducesResponseType(201, Type = typeof(Forum))]
         public async Task<IActionResult> CreateForum(Guid forumId,
             [FromBody] CreateForum createForum,
-            [FromServices] ICreateForumUseCase useCase,
             [FromServices] IMapper mapper,
             CancellationToken cancellationToken)
         {
 
             var command = new CreateForumCommand(createForum.Title);
-            var forum = await useCase.Execute(command, cancellationToken);
+            var forum = await useCase.Send(command, cancellationToken);
 
             return CreatedAtRoute(nameof(GetForums), mapper.Map<Forum>(forum));
 
@@ -43,11 +48,10 @@ namespace GigaApp.API.Controllers
         [HttpGet(Name = nameof(GetForums))]
         [ProducesResponseType(200, Type = typeof(Forum[]))]
         public async Task<IActionResult> GetForums(
-            [FromServices] IGetForumsUseCase useCase,
             [FromServices] IMapper mapper,
             CancellationToken cancellationToken)
         {
-            var forums = await useCase.Execute(cancellationToken);
+            var forums = await useCase.Send(new GetForumsQuery(), cancellationToken);
 
             return Ok(forums.Select(mapper.Map<Forum>));
         }
@@ -72,11 +76,10 @@ namespace GigaApp.API.Controllers
             [FromRoute]  Guid forumId, 
             [FromQuery] int skip, 
             [FromQuery] int take, 
-            [FromServices] IGetTopicsUseCase useCase,
             [FromServices] IMapper mapper,
             CancellationToken cancellationToken)
         {
-            var (resources, total) = await useCase.Execute(new GetTopicsQuery(forumId, skip, take), cancellationToken);
+            var (resources, total) = await useCase.Send(new GetTopicsQuery(forumId, skip, take), cancellationToken);
 
             return Ok(new { resources = resources.Select(mapper.Map<Topic>), total});
 
@@ -97,13 +100,12 @@ namespace GigaApp.API.Controllers
         [ProducesResponseType(201, Type = typeof(Topic))]
         public async Task<IActionResult> CreateTopic(Guid forumId, 
             [FromBody] CreateTopic createTopic,
-            [FromServices] ICreateTopicUseCase useCase,
             [FromServices] IMapper mapper,
             CancellationToken cancellationToken)
         {
 
             var command = new CreateTopicCommand(forumId, createTopic.Title);
-            var topic = await useCase.Execute(command, cancellationToken);
+            var topic = await useCase.Send(command, cancellationToken);
 
             return CreatedAtRoute(nameof(GetForums), mapper.Map<Topic>(topic));
 

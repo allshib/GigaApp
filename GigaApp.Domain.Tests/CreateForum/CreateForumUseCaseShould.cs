@@ -50,7 +50,7 @@ namespace GigaApp.Domain.Tests.CreateForum
             createForumStorageSetup.ReturnsAsync(forum);
             intentionManagerSetup.Returns(true);
 
-            var actual = await sut.Execute(new CreateForumCommand("Test"), CancellationToken.None);
+            var actual = await sut.Handle(new CreateForumCommand("Test"), CancellationToken.None);
 
             actual.Should().Be(forum);
             storage.Verify(x => x.Create("Test", CancellationToken.None), Times.Once);

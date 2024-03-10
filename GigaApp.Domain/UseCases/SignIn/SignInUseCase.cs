@@ -3,53 +3,57 @@ using FluentValidation.Results;
 using GigaApp.Domain.Authentication;
 using GigaApp.Domain.Exceptions;
 using GigaApp.Domain.Identity;
+using MediatR;
 using Microsoft.Extensions.Options;
 
 namespace GigaApp.Domain.UseCases.SignIn
 {
-    internal class SignInUseCase : ISignInUseCase
+    internal class SignInUseCase : IRequestHandler<SignInCommand, (IIdentity identity, string token)>
+
     {
-        private readonly IValidator<SignInCommand> validator;
-        private readonly ISignInStorage signInStorage;
-        private readonly IPasswordManager passwordManager;
-        private readonly ISymmetricEncryptor encryptor;
-        private readonly AuthenticationConfiguration authenticationConfiguration;
+    private readonly IValidator<SignInCommand> validator;
+    private readonly ISignInStorage signInStorage;
+    private readonly IPasswordManager passwordManager;
+    private readonly ISymmetricEncryptor encryptor;
+    private readonly AuthenticationConfiguration authenticationConfiguration;
 
-        public SignInUseCase(
-            IValidator<SignInCommand> validator,
-            ISignInStorage signInStorage,
-            IPasswordManager passwordManager,
-            ISymmetricEncryptor encryptor,
-            IOptions<AuthenticationConfiguration> options
-            )
+    public SignInUseCase(
+        IValidator<SignInCommand> validator,
+        ISignInStorage signInStorage,
+        IPasswordManager passwordManager,
+        ISymmetricEncryptor encryptor,
+        IOptions<AuthenticationConfiguration> options
+    )
+    {
+        this.validator = validator;
+        this.signInStorage = signInStorage;
+        this.passwordManager = passwordManager;
+        this.encryptor = encryptor;
+        authenticationConfiguration = options.Value;
+    }
+
+
+        public async Task<(IIdentity identity, string token)> Handle(SignInCommand request, CancellationToken cancellationToken)
         {
-            this.validator = validator;
-            this.signInStorage = signInStorage;
-            this.passwordManager = passwordManager;
-            this.encryptor = encryptor;
-            authenticationConfiguration = options.Value;
-        }
-        public async Task<(IIdentity identity, string token)> Execute(SignInCommand command, CancellationToken cancellationToken)
-        {
-            await validator.ValidateAndThrowAsync(command, cancellationToken);
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-            var recognizedUser = await signInStorage.FindUser(command.Login, cancellationToken);
+            var recognizedUser = await signInStorage.FindUser(request.Login, cancellationToken);
 
-            if(recognizedUser is null)
+            if (recognizedUser is null)
             {
                 throw new ValidationException(new ValidationFailure[]
                 {
                     new()
                     {
-                        PropertyName = nameof(command.Login), 
-                        ErrorCode = ValidationErrorCode.Invalid, 
-                        AttemptedValue = command.Login
+                        PropertyName = nameof(request.Login),
+                        ErrorCode = ValidationErrorCode.Invalid,
+                        AttemptedValue = request.Login
                     }
                 });
             }
-            
+
             var passwordMatches = passwordManager
-                .ComparePasswords(command.Password, recognizedUser.Salt, recognizedUser.PasswordHash);
+                .ComparePasswords(request.Password, recognizedUser.Salt, recognizedUser.PasswordHash);
 
             if (!passwordMatches)
             {
@@ -57,14 +61,15 @@ namespace GigaApp.Domain.UseCases.SignIn
                 {
                     new()
                     {
-                        PropertyName = nameof(command.Password),
+                        PropertyName = nameof(request.Password),
                         ErrorCode = ValidationErrorCode.Invalid,
-                        AttemptedValue = command.Password
+                        AttemptedValue = request.Password
                     }
                 });
             }
 
-            var sessionId = await signInStorage.CreateSession(recognizedUser.UserId, DateTimeOffset.UtcNow + TimeSpan.FromHours(1), cancellationToken);
+            var sessionId = await signInStorage.CreateSession(recognizedUser.UserId,
+                DateTimeOffset.UtcNow + TimeSpan.FromHours(1), cancellationToken);
 
             var token = await encryptor.Encrypt(sessionId.ToString(), authenticationConfiguration.Key, cancellationToken);
 

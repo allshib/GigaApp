@@ -41,7 +41,7 @@ namespace GigaApp.Domain.Tests.GetTopics
 
             getForumStorageSetup.ReturnsAsync(new Forum[] { new Forum { Id = Guid.Parse("452e1f18-a036-4467-b577-b29e7fcbe724") } });
 
-            await sut.Invoking(s => s.Execute(new GetTopicsQuery(forumId, 0, 1), CancellationToken.None))
+            await sut.Invoking(s => s.Handle(new GetTopicsQuery(forumId, 0, 1), CancellationToken.None))
                 .Should().ThrowAsync<ForumNotFoundException>();
         }
 
@@ -55,7 +55,7 @@ namespace GigaApp.Domain.Tests.GetTopics
 
             var forumId = Guid.Parse("9d3511ef-afa7-4084-a587-e5a5a254742f");
             getForumStorageSetup.ReturnsAsync(new Forum[] { new Forum { Id = forumId } });
-            var (actualResources, actualTotalCount) = await sut.Execute(new GetTopicsQuery(forumId, 5, 10), CancellationToken.None);
+            var (actualResources, actualTotalCount) = await sut.Handle(new GetTopicsQuery(forumId, 5, 10), CancellationToken.None);
 
             actualResources.Should().BeEquivalentTo(expectedResources);
             actualTotalCount.Should().Be(expectedTotalCount);
