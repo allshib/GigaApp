@@ -29,7 +29,7 @@ namespace GigaApp.API.Monitoring
                     .ConfigureResource(r=>r.AddService("Giga"))
                     .AddAspNetCoreInstrumentation()
                     .AddEntityFrameworkCoreInstrumentation(cfg=>cfg.SetDbStatementForText = true)
-                    .AddConsoleExporter()
+                    .AddSource("Giga.Domain")
                     .AddJaegerExporter(options=>options.Endpoint = new Uri(configuration.GetConnectionString("Tracing")!)));
 
 
