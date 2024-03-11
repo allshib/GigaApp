@@ -25,7 +25,7 @@ namespace GigaApp.API.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
         [ProducesResponseType(201, Type = typeof(Forum))]
-        public async Task<IActionResult> CreateForum(Guid forumId,
+        public async Task<IActionResult> CreateForum(
             [FromBody] CreateForum createForum,
             [FromServices] IMapper mapper,
             CancellationToken cancellationToken)

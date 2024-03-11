@@ -8,21 +8,17 @@ namespace GigaApp.Domain.Authentication
     internal class AuthenticationService : IAuthenticationService
     {
         private readonly ISymmetricDecryptor decryptor;
-        private readonly IPasswordManager securityManager;
         private readonly IAuthenticationStorage storage;
         private readonly ILogger<AuthenticationService> logger;
         private readonly AuthenticationConfiguration authConfig;
-        private readonly Lazy<Aes> aesService = new(Aes.Create);
 
         public AuthenticationService(
             ISymmetricDecryptor decryptor,
-            IPasswordManager securityManager, 
             IOptions<AuthenticationConfiguration> authOptions,
             IAuthenticationStorage storage,
             ILogger<AuthenticationService> logger)
         {
             this.decryptor = decryptor;
-            this.securityManager = securityManager;
             this.storage = storage;
             this.logger = logger;
             authConfig = authOptions.Value;

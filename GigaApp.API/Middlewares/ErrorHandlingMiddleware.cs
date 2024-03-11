@@ -30,21 +30,6 @@ public class ErrorHandlingMiddleware
         }
         catch (Exception exception)
         {
-            
-
-            
-
-            var httpCode = exception switch
-            {
-                IntetntionManagerExeption => StatusCodes.Status403Forbidden,
-                ValidationException => StatusCodes.Status400BadRequest,
-                DomainException domainException => domainException.ErrorCode switch
-                {
-                    DomainErrorCode.Gone => StatusCodes.Status410Gone,
-                    _ => StatusCodes.Status500InternalServerError
-                },
-                _ => StatusCodes.Status500InternalServerError
-            };
 
             ProblemDetails problemDetails;
             switch (exception)

@@ -17,10 +17,7 @@ internal class MetricsPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<
         this.logger = logger;
     }
 
-    public async Task<TResponse> Handle(
-        TRequest request,
-        RequestHandlerDelegate<TResponse> next,
-        CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         if (request is not IMonitoredRequest monitoredRequest)
             return await next();
