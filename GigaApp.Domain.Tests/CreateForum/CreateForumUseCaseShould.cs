@@ -23,11 +23,11 @@ namespace GigaApp.Domain.Tests.CreateForum
 
         public CreateForumUseCaseShould()
         {
-            var validator = new Mock<IValidator<CreateForumCommand>>();
+            //var validator = new Mock<IValidator<CreateForumCommand>>();
 
-            validator
-                .Setup(v => v.ValidateAsync(It.IsAny<CreateForumCommand>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new ValidationResult());
+            //validator
+            //    .Setup(v => v.ValidateAsync(It.IsAny<CreateForumCommand>(), It.IsAny<CancellationToken>()))
+            //    .ReturnsAsync(new ValidationResult());
 
             var intentionManager = new Mock<IIntentionManager>();
 
@@ -36,7 +36,7 @@ namespace GigaApp.Domain.Tests.CreateForum
             storage = new Mock<ICreateForumStorage>();
             createForumStorageSetup = storage.Setup(x => x.Create(It.IsAny<string>(), It.IsAny<CancellationToken>()));
 
-            sut = new CreateForumUseCase(validator.Object, intentionManager.Object, storage.Object);
+            sut = new CreateForumUseCase(intentionManager.Object, storage.Object);
         }
 
         [Fact]

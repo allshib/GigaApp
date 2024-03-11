@@ -54,13 +54,13 @@ namespace GigaApp.Domain.Tests
 
             intentionIsAllowedSetup = intentionManager.Setup(x => x.IsAllowed(It.IsAny<TopicIntention>()));
 
-            var validator = new Mock<IValidator<CreateTopicCommand>>();
+            //var validator = new Mock<IValidator<CreateTopicCommand>>();
 
-            validator.Setup(v => v.ValidateAsync(It.IsAny<CreateTopicCommand>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new ValidationResult());
+            //validator.Setup(v => v.ValidateAsync(It.IsAny<CreateTopicCommand>(), It.IsAny<CancellationToken>()))
+            //    .ReturnsAsync(new ValidationResult());
             
 
-            sut = new(intentionManager.Object, storage.Object, getForumsStorage.Object, identityProvider.Object, validator.Object, null);
+            sut = new(intentionManager.Object, storage.Object, getForumsStorage.Object, identityProvider.Object);
         }
 
         [Fact]

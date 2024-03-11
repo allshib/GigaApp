@@ -26,10 +26,10 @@ namespace GigaApp.Domain.Tests.SignOn
         {
 
             storage = new Mock<ISignOnStorage>();
-            var validator = new Mock<IValidator<SignOnCommand>>();
-            validator
-                .Setup(x => x.ValidateAsync(It.IsAny<SignOnCommand>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new ValidationResult());
+            //var validator = new Mock<IValidator<SignOnCommand>>();
+            //validator
+            //    .Setup(x => x.ValidateAsync(It.IsAny<SignOnCommand>(), It.IsAny<CancellationToken>()))
+            //    .ReturnsAsync(new ValidationResult());
 
             passwordManager = new Mock<IPasswordManager>();
 
@@ -41,7 +41,7 @@ namespace GigaApp.Domain.Tests.SignOn
                     It.IsAny<CancellationToken>()));
                 //.ReturnsAsync(new User(Guid.Parse("40e49942-3d4c-4151-b2f4-a5468944f885")));
 
-            sut = new SignOnUseCase(storage.Object, validator.Object, passwordManager.Object);
+            sut = new SignOnUseCase(storage.Object, passwordManager.Object);
         }
 
         [Fact]

@@ -31,10 +31,10 @@ public class SignInUseCaseShould
     {
 
         storage = new Mock<ISignInStorage>();
-        var validator = new Mock<IValidator<SignInCommand>>();
-        validator
-            .Setup(x => x.ValidateAsync(It.IsAny<SignInCommand>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new ValidationResult());
+        //var validator = new Mock<IValidator<SignInCommand>>();
+        //validator
+        //    .Setup(x => x.ValidateAsync(It.IsAny<SignInCommand>(), It.IsAny<CancellationToken>()))
+        //    .ReturnsAsync(new ValidationResult());
 
         passwordManager = new Mock<IPasswordManager>();
         comparePasswordSetup = passwordManager.Setup(x =>
@@ -54,8 +54,7 @@ public class SignInUseCaseShould
             Base64Key = "NhB8TBbwVkihKXK2BgxyWPne8mw1nTey88xKjT72N6U="
         });
 
-        sut = new SignInUseCase(validator.Object, storage.Object, passwordManager.Object, encryptor.Object,
-            options.Object);
+        sut = new SignInUseCase(storage.Object, passwordManager.Object, encryptor.Object,options.Object);
     }
 
     [Fact]

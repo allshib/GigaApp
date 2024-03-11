@@ -9,33 +9,27 @@ using Microsoft.Extensions.Options;
 namespace GigaApp.Domain.UseCases.SignIn
 {
     internal class SignInUseCase : IRequestHandler<SignInCommand, (IIdentity identity, string token)>
-
     {
-    private readonly IValidator<SignInCommand> validator;
-    private readonly ISignInStorage signInStorage;
-    private readonly IPasswordManager passwordManager;
-    private readonly ISymmetricEncryptor encryptor;
-    private readonly AuthenticationConfiguration authenticationConfiguration;
+        private readonly ISignInStorage signInStorage;
+        private readonly IPasswordManager passwordManager;
+        private readonly ISymmetricEncryptor encryptor;
+        private readonly AuthenticationConfiguration authenticationConfiguration;
 
-    public SignInUseCase(
-        IValidator<SignInCommand> validator,
-        ISignInStorage signInStorage,
-        IPasswordManager passwordManager,
-        ISymmetricEncryptor encryptor,
-        IOptions<AuthenticationConfiguration> options
-    )
-    {
-        this.validator = validator;
-        this.signInStorage = signInStorage;
-        this.passwordManager = passwordManager;
-        this.encryptor = encryptor;
-        authenticationConfiguration = options.Value;
-    }
+        public SignInUseCase(
+            ISignInStorage signInStorage,
+            IPasswordManager passwordManager,
+            ISymmetricEncryptor encryptor,
+            IOptions<AuthenticationConfiguration> options)
+        {
+            this.signInStorage = signInStorage;
+            this.passwordManager = passwordManager;
+            this.encryptor = encryptor;
+            authenticationConfiguration = options.Value;
+        }
 
 
         public async Task<(IIdentity identity, string token)> Handle(SignInCommand request, CancellationToken cancellationToken)
         {
-            await validator.ValidateAndThrowAsync(request, cancellationToken);
 
             var recognizedUser = await signInStorage.FindUser(request.Login, cancellationToken);
 

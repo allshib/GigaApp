@@ -24,15 +24,15 @@ namespace GigaApp.Domain.Tests.GetTopics
 
         public GetTopicsUseCaseShould()
         {
-            var validator = new Mock<IValidator<GetTopicsQuery>>();
-            validator.Setup(v => v.ValidateAsync(It.IsAny<GetTopicsQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new ValidationResult());
+            //var validator = new Mock<IValidator<GetTopicsQuery>>();
+            //validator.Setup(v => v.ValidateAsync(It.IsAny<GetTopicsQuery>(), It.IsAny<CancellationToken>()))
+            //    .ReturnsAsync(new ValidationResult());
 
             storage = new Mock<IGetTopicsStorage>();
             getTopicsSetup =storage.Setup(v => v.GetTopics(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()));
             var getForumStorage = new Mock<IGetForumsStorage>();
             getForumStorageSetup = getForumStorage.Setup(v => v.GetForums(It.IsAny<CancellationToken>()));
-            sut = new GetTopicsUseCase(validator.Object, getForumStorage.Object, storage.Object);
+            sut = new GetTopicsUseCase(getForumStorage.Object, storage.Object);
         }
         [Fact]
         public async Task ThrowForumNotFoundException_ExtractedNoForum()

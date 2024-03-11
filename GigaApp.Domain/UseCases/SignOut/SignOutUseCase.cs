@@ -4,7 +4,7 @@ using MediatR;
 
 namespace GigaApp.Domain.UseCases.SignOut;
 
-public class SignOutUseCase : IRequestHandler<SignOutCommand>
+internal class SignOutUseCase : IRequestHandler<SignOutCommand>
 {
     private readonly IIdentityProvider identityProvider;
     private readonly IIntentionManager intentionManager;
