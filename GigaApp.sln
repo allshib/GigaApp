@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GigaApp.Domain.Tests", "Gig
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{1736E55C-E664-4D27-998F-630167CDA0C3}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		docker-compose-2024-03-11.bac = docker-compose-2024-03-11.bac
 		docker-compose.yaml = docker-compose.yaml
+		Dockerfile = Dockerfile
+		loki-config.yml = loki-config.yml
 		prometheus.yml = prometheus.yml
 	EndProjectSection
 EndProject

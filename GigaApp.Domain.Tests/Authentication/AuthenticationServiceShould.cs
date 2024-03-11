@@ -30,12 +30,12 @@ namespace GigaApp.Domain.Tests.Authentication
             {
                 Base64Key = "NhB8TBbwVkihKXK2BgxyWPne8mw1nTey88xKjT72N6U="
             });
-            var passwordManager = new Mock<IPasswordManager>();
+            //var passwordManager = new Mock<IPasswordManager>();
 
             var storage = new Mock<IAuthenticationStorage>();
             findSessionSetup = storage.Setup(x => x.FindSession(It.IsAny<Guid>(), It.IsAny<CancellationToken>())); 
 
-            sut = new AuthenticationService(decryptor.Object, passwordManager.Object, options.Object, storage.Object, NullLogger<AuthenticationService>.Instance);
+            sut = new AuthenticationService(decryptor.Object, options.Object, storage.Object, NullLogger<AuthenticationService>.Instance);
         }
         [Fact]
         public async Task ReturnGuestIdentity_WhenSessionNotFound()

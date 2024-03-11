@@ -27,7 +27,18 @@ namespace GigaApp.API.Monitoring
                     )
                 .WithTracing(builder=> builder
                     .ConfigureResource(r=>r.AddService("Giga"))
-                    .AddAspNetCoreInstrumentation()
+                    .AddAspNetCoreInstrumentation(options =>
+                    {
+                        options.Filter += context =>
+                        {
+                            return !context.Request.Path.Value!
+                                    .Contains("metrics", StringComparison.InvariantCultureIgnoreCase) &&
+                                   !context.Request.Path.Value!
+                                    .Contains("swagger", StringComparison.InvariantCultureIgnoreCase);
+                        };
+                        options.EnrichWithHttpResponse = (activity, response) =>
+                            activity.AddTag("error", response.StatusCode >= 400);
+                    })
                     .AddEntityFrameworkCoreInstrumentation(cfg=>cfg.SetDbStatementForText = true)
                     .AddSource("Giga.Domain")
                     .AddJaegerExporter(options=>options.Endpoint = new Uri(configuration.GetConnectionString("Tracing")!)));

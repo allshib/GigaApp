@@ -4,6 +4,8 @@ using GigaApp.Domain.UseCases.SignIn;
 using GigaApp.Domain.UseCases.SignOn;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Serilog.Core;
+using Serilog.Events;
 
 namespace GigaApp.API.Controllers
 {
@@ -46,6 +48,20 @@ namespace GigaApp.API.Controllers
             tokenStorage.Store(HttpContext, token);
 
             return Ok(identity);
+        }
+
+
+        [HttpGet("switch-log-level")]
+        public Task<IActionResult> SwitchLogLevel(
+            [FromServices] LoggingLevelSwitch loggingLevelSwitch,
+            CancellationToken cancellationToken)
+        {
+            loggingLevelSwitch.MinimumLevel = loggingLevelSwitch.MinimumLevel switch {
+                LogEventLevel.Information => LogEventLevel.Error,
+                _ => LogEventLevel.Information
+            };
+
+            return Task.FromResult((IActionResult)Ok());
         }
     }
 }
