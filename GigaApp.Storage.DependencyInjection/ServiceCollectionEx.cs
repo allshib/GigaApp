@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using GigaApp.Domain.Authentication;
 using GigaApp.Domain.UseCases.SignOut;
+using GigaApp.Domain;
 
 namespace GigaApp.Storage.DependencyInjection
 {
@@ -34,6 +35,7 @@ namespace GigaApp.Storage.DependencyInjection
 
             services.AddAutoMapper(config =>config.AddMaps(Assembly.GetAssembly(typeof(ForumDbContext))));
 
+            services.AddSingleton<IUnitOfWork>(sp => new UnitOfWork(sp));
 
             return services;
         }

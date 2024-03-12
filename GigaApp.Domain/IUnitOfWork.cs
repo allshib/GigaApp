@@ -9,7 +9,7 @@ namespace GigaApp.Domain
 {
     public interface IUnitOfWork
     {
-        Task<IUnitOfWorkScope> StartScope();
+        Task<IUnitOfWorkScope> StartScope(CancellationToken cancellationToken);
     }
     public interface IUnitOfWorkScope : IAsyncDisposable
     {
