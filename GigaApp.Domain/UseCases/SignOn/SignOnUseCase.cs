@@ -6,21 +6,10 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace GigaApp.Domain.UseCases.SignOn
 {
-    internal class SignOnUseCase : IRequestHandler<SignOnCommand, IIdentity>
+    internal class SignOnUseCase(
+        ISignOnStorage   signOnStorage,
+        IPasswordManager passwordManager): IRequestHandler<SignOnCommand, IIdentity>
     {
-        private readonly ISignOnStorage signOnStorage;
-        private readonly IPasswordManager passwordManager;
-
-        public SignOnUseCase(
-            ISignOnStorage signOnStorage,
-            IPasswordManager passwordManager)
-        {
-            this.signOnStorage = signOnStorage;
-            this.passwordManager = passwordManager;
-        }
-
-
-
         public async Task<IIdentity> Handle(SignOnCommand request, CancellationToken cancellationToken)
         {
             var (salt, hash) = passwordManager.GeneratePasswordParts(request.Password);

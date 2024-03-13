@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
+using GigaApp.Storage.Entities;
 
 namespace GigaApp.Storage
 {
@@ -15,7 +10,8 @@ namespace GigaApp.Storage
         public DbSet<Forum> Forums { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        
+        public DbSet<DomainEvent> DomainEvents { get; set; }
+
         public ForumDbContext(DbContextOptions<ForumDbContext> options) : base(options) {
 
             

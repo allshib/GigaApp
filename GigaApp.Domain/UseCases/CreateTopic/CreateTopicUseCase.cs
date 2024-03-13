@@ -20,27 +20,12 @@ using GigaApp.Domain.UseCases.CreateForum;
 
 namespace GigaApp.Domain.UseCases.CreateTopic
 {
-    internal class CreateTopicUseCase : IRequestHandler<CreateTopicCommand, Topic>
+    internal class CreateTopicUseCase(
+        IIntentionManager intentionManager,
+        IGetForumsStorage getForumsStorage,
+        IIdentityProvider identityProvider,
+        IUnitOfWork       unitOfWork): IRequestHandler<CreateTopicCommand, Topic>
     {
-        private readonly IIntentionManager intentionManager;
-        private readonly IGetForumsStorage getForumsStorage;
-        private readonly IIdentityProvider identityProvider;
-        private readonly IUnitOfWork unitOfWork;
-
-        public CreateTopicUseCase(
-            IIntentionManager intentionManager,
-            IGetForumsStorage getForumsStorage,
-            IIdentityProvider identityProvider,
-            IUnitOfWork unitOfWork)
-        {
-            this.intentionManager = intentionManager;
-            
-            this.getForumsStorage = getForumsStorage;
-            this.identityProvider = identityProvider;
-            this.unitOfWork = unitOfWork;
-        }
-
-
         public async Task<Topic> Handle(CreateTopicCommand request, CancellationToken cancellationToken)
         {
             intentionManager.ThrowIfForbidden(TopicIntention.Create);
@@ -49,10 +34,11 @@ namespace GigaApp.Domain.UseCases.CreateTopic
 
             await using var scope = await unitOfWork.StartScope(cancellationToken);
             var createTopicStorage = scope.GetStorage<ICreateTopicStorage>();
-            var createForumStorage = scope.GetStorage<ICreateForumStorage>();
+            var domainEventStorage = scope.GetStorage<IDomainEventStorage>();
+
 
             var topic = await createTopicStorage.CreateTopic(request.ForumId, identityProvider.Current.UserId, request.Title, cancellationToken);
-            var forum = await createForumStorage.Create("Test", cancellationToken);
+            await domainEventStorage.AddEvent(topic, cancellationToken);
 
             await scope.Commit(cancellationToken);
             return topic;

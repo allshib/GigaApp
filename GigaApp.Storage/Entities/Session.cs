@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GigaApp.Storage
+namespace GigaApp.Storage.Entities
 {
     public class Session
     {

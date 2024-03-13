@@ -58,9 +58,9 @@ namespace GigaApp.Domain.Tests
 
             //validator.Setup(v => v.ValidateAsync(It.IsAny<CreateTopicCommand>(), It.IsAny<CancellationToken>()))
             //    .ReturnsAsync(new ValidationResult());
-            
 
-            sut = new(intentionManager.Object, storage.Object, getForumsStorage.Object, identityProvider.Object);
+            //TODO: Fix this
+            sut = new(intentionManager.Object, getForumsStorage.Object, identityProvider.Object);
         }
 
         [Fact]

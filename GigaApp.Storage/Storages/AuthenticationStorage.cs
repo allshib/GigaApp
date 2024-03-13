@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using GigaApp.Domain.Authentication;
+using GigaApp.Storage.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GigaApp.Storage.Storages

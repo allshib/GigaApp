@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GigaApp.Storage
+namespace GigaApp.Storage.Entities
 {
     public class Comment
     {

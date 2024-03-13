@@ -21,9 +21,9 @@ namespace GigaApp.Storage
     }
     internal class UnitOfWorkScope(IServiceScope scope, IDbContextTransaction transaction) : IUnitOfWorkScope
     {
-        public Task Commit(CancellationToken cancellationToken)
+        public async Task Commit(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await transaction.CommitAsync(cancellationToken);
         }
 
         

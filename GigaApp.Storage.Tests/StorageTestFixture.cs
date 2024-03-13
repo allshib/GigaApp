@@ -9,6 +9,7 @@ using AutoMapper;
 using GigaApp.Storage.Mapping;
 using Testcontainers.MsSql;
 using Microsoft.Extensions.Caching.Memory;
+using GigaApp.Storage.Entities;
 
 namespace GigaApp.Storage.Tests
 {

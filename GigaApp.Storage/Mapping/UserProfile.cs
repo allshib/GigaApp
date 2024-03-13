@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GigaApp.Domain.Authentication;
+using GigaApp.Storage.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace GigaApp.Storage.Mapping
 
         public UserProfile()
         {
-            CreateMap<User, RecognizedUser>();
+            CreateMap<Entities.User, RecognizedUser>();
         }
     }
 }

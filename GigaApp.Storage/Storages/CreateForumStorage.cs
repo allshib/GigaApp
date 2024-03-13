@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using GigaApp.Domain.UseCases;
 using GigaApp.Domain.UseCases.CreateForum;
 using GigaApp.Domain.UseCases.CreateTopic;
+using GigaApp.Storage.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using System;

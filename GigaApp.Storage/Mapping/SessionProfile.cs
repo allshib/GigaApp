@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using GigaApp.Storage.Entities;
 
 namespace GigaApp.Storage.Mapping
 {

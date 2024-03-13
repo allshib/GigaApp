@@ -45,9 +45,9 @@ public class AccountEndpointsShould(ForumApiApplicationFactory factory) : IClass
             $"forum/{forum.Id}/topics", JsonContent.Create(new { title = "New topic" }));
         createTopicResponse.IsSuccessStatusCode.Should().BeTrue();
 
-        //await using var scope = factory.Services.CreateAsyncScope();
-        //var domainEvents = await scope.ServiceProvider.GetRequiredService<ForumDbContext>()
-        //    .DomainEvents.ToArrayAsync();
-        //domainEvents.Should().HaveCount(1);
+        await using var scope = factory.Services.CreateAsyncScope();
+        var domainEvents = await scope.ServiceProvider.GetRequiredService<ForumDbContext>()
+            .DomainEvents.ToArrayAsync();
+        domainEvents.Should().HaveCount(1);
     }
 }
