@@ -47,7 +47,7 @@ namespace GigaApp.Domain.UseCases.CreateTopic
 
             await getForumsStorage.ThrowIfForumWasNotFound(request.ForumId, cancellationToken);
 
-            await using var scope = await unitOfWork.StartScope();
+            await using var scope = await unitOfWork.StartScope(cancellationToken);
             var createTopicStorage = scope.GetStorage<ICreateTopicStorage>();
             var createForumStorage = scope.GetStorage<ICreateForumStorage>();
 
