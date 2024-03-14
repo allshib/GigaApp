@@ -14,6 +14,10 @@ using GigaApp.XAF.Module.UseCaseExtensions;
 using MediatR;
 using System.Linq;
 using GigaApp.Domain.UseCases.CreateForum;
+using DevExpress.XtraPrinting.Native;
+using GigaApp.Domain.Authentication;
+
+using Microsoft.AspNetCore.Http;
 
 namespace GigaApp.XAF.Module.ServiceClasses;
 
@@ -45,12 +49,24 @@ public class GigaAppStorage(IMediator useCase, IMapper mapper) : NonPersistentSt
             var forums = toInsert.OfType<Forum>();
 
             foreach (var forum in forums)
-            {
-                var task = Task.Run(() => useCase
-                    .Send(new CreateForumCommand(forum.Title), CancellationToken.None));
+                useCase.CreateForum(forum);
+        }
 
-                mapper.Map<Forum>(task.Result);
-            }
+        if (toUpdate.Any(x => x is Forum))
+        {
+            var forums = toUpdate.OfType<Forum>();
+
+            foreach (var forum in forums)
+                useCase.UpdateForum(forum, mapper);
+        }
+
+        if (toDelete.Any(x => x is Forum))
+        {
+            var forums = toDelete.OfType<Forum>();
+
+            foreach (var forum in forums)
+                useCase.DeleteForum(forum.Id);
+            
         }
 
 

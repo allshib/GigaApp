@@ -4,6 +4,7 @@ using GigaApp.Domain.Identity;
 using GigaApp.Domain.Authentication;
 using GigaApp.XAF.Blazor.Server.Authentication;
 
+
 namespace GigaApp.XAF.Blazor.Server.Middlewares;
 
 public class AuthenticationMiddleware(RequestDelegate next)

@@ -14,7 +14,10 @@ namespace GigaApp.Storage.Mapping
         public ForumProfile() {
             CreateMap<Forum, Domain.Models.Forum>()
                     .ForMember(d => d.Id, s => s.MapFrom(f => f.ForumId));
-                //.ForMember(d=>d.Title, s => s.MapFrom(f => f.Title));
+
+
+            CreateMap<Domain.Models.Forum, Forum>()
+                .ForMember(d => d.ForumId, s => s.MapFrom(f => f.Id));
         }
     }
 }

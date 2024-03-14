@@ -14,6 +14,8 @@ using GigaApp.Domain;
 using GigaApp.Domain.UseCases;
 using GigaApp.Domain.UseCases.GetForumByKey;
 using GigaApp.Storage.Entities;
+using GigaApp.Domain.UseCases.DeleteForumByKey;
+using GigaApp.Domain.UseCases.UpdateForumUseCase;
 
 namespace GigaApp.Storage.DependencyInjection
 {
@@ -22,16 +24,18 @@ namespace GigaApp.Storage.DependencyInjection
         public static IServiceCollection AddForumStorage(this IServiceCollection services, string connectionString)
         {
             services
-            .AddScoped<ICreateTopicStorage, CreateTopicStorage>()
-            .AddScoped<IGetForumsStorage, GetForumsStorage>()
-            .AddScoped<IGetTopicsStorage, GetTopicsStorage>()
-            .AddScoped<ICreateForumStorage, CreateForumStorage>()
-            .AddScoped<ISignInStorage, SignInStorage>()
-            .AddScoped<ISignOnStorage, SignOnStorage>()
-            .AddScoped<ISignOutStorage, SignOutStorage>()
-            .AddScoped<IAuthenticationStorage, AuthenticationStorage>()
-            .AddScoped<IDomainEventStorage, DomainEventStorage>()
-            .AddScoped<IGetForumByKeyStorage, GetForumByKeyStorage>();
+                .AddScoped<ICreateTopicStorage, CreateTopicStorage>()
+                .AddScoped<IGetForumsStorage, GetForumsStorage>()
+                .AddScoped<IGetTopicsStorage, GetTopicsStorage>()
+                .AddScoped<ICreateForumStorage, CreateForumStorage>()
+                .AddScoped<ISignInStorage, SignInStorage>()
+                .AddScoped<ISignOnStorage, SignOnStorage>()
+                .AddScoped<ISignOutStorage, SignOutStorage>()
+                .AddScoped<IAuthenticationStorage, AuthenticationStorage>()
+                .AddScoped<IDomainEventStorage, DomainEventStorage>()
+                .AddScoped<IGetForumByKeyStorage, GetForumByKeyStorage>()
+                .AddScoped<IDeleteForumByKeyStorage, DeleteForumByKeyStorage>()
+                .AddScoped<IUpdateForumStorage, UpdateForumStorage>();
 
             services.AddDbContext<ForumDbContext>(options => options.UseSqlServer(connectionString, b =>
                 b.MigrationsAssembly("GigaApp.API")), ServiceLifetime.Singleton);

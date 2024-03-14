@@ -12,6 +12,7 @@ using GigaApp.XAF.Blazor.Server.Services;
 using GigaApp.Storage.DependencyInjection;
 using GigaApp.XAF.Blazor.Server.Authentication;
 using GigaApp.XAF.Blazor.Server.Middlewares;
+
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using GigaApp.XAF.Module.ServiceClasses;
 using GigaApp.XAF.Module.Mapping;
@@ -47,6 +48,7 @@ public class Startup {
         services.AddScoped<IAuthTokenStorage, AuthTokenStorage>();
 
 
+
         services.AddXaf(Configuration, builder => {
             builder.UseApplication<XAFBlazorApplication>();
             builder.Modules
@@ -58,9 +60,7 @@ public class Startup {
             	.Add<XAFBlazorModule>();
             builder.ObjectSpaceProviders
                     .AddNonPersistent();
-            builder.Security.AddAuthenticationProvider<>()
-            })
-
+            
         });
     }
 

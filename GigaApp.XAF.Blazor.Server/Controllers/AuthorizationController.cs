@@ -13,9 +13,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GigaApp.Domain.Identity;
 using GigaApp.Domain.UseCases.SignIn;
 using GigaApp.Domain.UseCases.SignOn;
 using GigaApp.XAF.Blazor.Server.Authentication;
+
 using MediatR;
 
 namespace GigaApp.XAF.Blazor.Server.Controllers
@@ -24,15 +26,17 @@ namespace GigaApp.XAF.Blazor.Server.Controllers
     public partial class AuthorizationController : ViewController
     {
         private readonly IMediator useCase;
+        private readonly IIdentityProvider identityProvider;
         private readonly IAuthTokenStorage tokenStorage;
-        private readonly IHttpContextAccessor accessor;
+
 
         [ActivatorUtilitiesConstructor]
-        public AuthorizationController(IMediator useCase, IAuthTokenStorage tokenStorage, IHttpContextAccessor accessor) : this()
+        public AuthorizationController(IMediator useCase, IIdentityProvider identityProvider) : this()
         {
             this.useCase = useCase;
+            this.identityProvider = identityProvider;
             this.tokenStorage = tokenStorage;
-            this.accessor = accessor;
+
         }
         public AuthorizationController()
         {
@@ -70,13 +74,8 @@ namespace GigaApp.XAF.Blazor.Server.Controllers
             var result = Task.Run(() => useCase
                 .Send(new SignInCommand("Test", "123"), CancellationToken.None)).Result;
 
-            //tokenStorage.Store(accessor.HttpContext!,result.token);
 
-            using var httpClient = new HttpClient();
-
-            var task = Task.Run(()=>httpClient.PostAsync(
-                "https://localhost:44318/accountblazor/signin", JsonContent.Create(new { Token = result.token }))).Result;
-
+            identityProvider.Current = result.identity;
         }
 
         protected override void OnActivated()

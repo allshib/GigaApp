@@ -21,8 +21,12 @@
     <PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="23.2.3" />
     <PackageReference Include="DevExpress.ExpressApp.Objects" Version="23.2.3" />
     <PackageReference Include="DevExpress.ExpressApp.Validation" Version="23.2.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GigaApp.Domain\GigaApp.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Authentication\" />
   </ItemGroup>
 </Project>
