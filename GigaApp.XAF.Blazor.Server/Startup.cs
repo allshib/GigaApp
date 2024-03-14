@@ -1,14 +1,20 @@
-﻿using DevExpress.ExpressApp.ApplicationBuilder;
+﻿using System.Reflection;
+using DevExpress.ExpressApp.ApplicationBuilder;
 using DevExpress.ExpressApp.Blazor.ApplicationBuilder;
 using DevExpress.ExpressApp.Blazor.Services;
 using DevExpress.Persistent.Base;
+using GigaApp.Domain.Authentication;
 using GigaApp.Domain.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components.Server.Circuits;
 using Microsoft.EntityFrameworkCore;
 using GigaApp.XAF.Blazor.Server.Services;
 using GigaApp.Storage.DependencyInjection;
+using GigaApp.XAF.Blazor.Server.Authentication;
+using GigaApp.XAF.Blazor.Server.Middlewares;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using GigaApp.XAF.Module.ServiceClasses;
+using GigaApp.XAF.Module.Mapping;
 
 namespace GigaApp.XAF.Blazor.Server;
 
@@ -28,17 +34,23 @@ public class Startup {
         services.AddServerSideBlazor();
         services.AddHttpContextAccessor();
         services.AddScoped<CircuitHandler, CircuitHandlerProxy>();
-
+        services.AddControllers();
         services
             .AddForumStorage(Configuration.GetConnectionString("MsSql"))
-            .AddForumDomain();
+            .AddForumDomain()
+            .AddScoped<NonPersistentStorageBase, GigaAppStorage>()
+            .AddAutoMapper(
+                config => 
+                config.AddProfile<XafObjectsProfile>());
+
+        services.Configure<AuthenticationConfiguration>(Configuration.GetSection("Authentication").Bind);
+        services.AddScoped<IAuthTokenStorage, AuthTokenStorage>();
 
 
         services.AddXaf(Configuration, builder => {
             builder.UseApplication<XAFBlazorApplication>();
             builder.Modules
                 .AddConditionalAppearance()
-                .AddFileAttachments()
                 .AddValidation(options => {
                     options.AllowValidationDetailsAccess = false;
                 })
@@ -46,6 +58,9 @@ public class Startup {
             	.Add<XAFBlazorModule>();
             builder.ObjectSpaceProviders
                     .AddNonPersistent();
+            builder.Security.AddAuthenticationProvider<>()
+            })
+
         });
     }
 
@@ -64,6 +79,9 @@ public class Startup {
         app.UseStaticFiles();
         app.UseRouting();
         app.UseXaf();
+        app
+            //.UseMiddleware<ErrorHandlingMiddleware>()
+            .UseMiddleware<AuthenticationMiddleware>();
         app.UseEndpoints(endpoints => {
             endpoints.MapXafEndpoints();
             endpoints.MapBlazorHub();

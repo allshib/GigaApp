@@ -8,7 +8,6 @@ using DevExpress.ExpressApp.Updating;
 using DevExpress.ExpressApp.Model.Core;
 using DevExpress.ExpressApp.Model.DomainLogics;
 using DevExpress.ExpressApp.Model.NodeGenerators;
-using DevExpress.Persistent.BaseImpl.EF;
 
 namespace GigaApp.XAF.Blazor.Server;
 

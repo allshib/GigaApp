@@ -9,6 +9,12 @@ using DevExpress.ExpressApp.Updating;
 using DevExpress.ExpressApp.Model.Core;
 using DevExpress.ExpressApp.Model.DomainLogics;
 using DevExpress.ExpressApp.Model.NodeGenerators;
+using GigaApp.XAF.Module.BusinessObjects;
+using GigaApp.XAF.Module.ServiceClasses;
+using Microsoft.Extensions.DependencyInjection;
+
+using GigaApp.Domain.UseCases.GetForums;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace GigaApp.XAF.Module;
 
@@ -22,8 +28,7 @@ public sealed class XAFModule : ModuleBase {
 		RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule));
 		RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.ConditionalAppearance.ConditionalAppearanceModule));
 		RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Validation.ValidationModule));
-		AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.EF.FileData));
-		AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.EF.FileAttachment));
+
     }
     public override IEnumerable<ModuleUpdater> GetModuleUpdaters(IObjectSpace objectSpace, Version versionFromDB) {
         ModuleUpdater updater = new DatabaseUpdate.Updater(objectSpace, versionFromDB);
@@ -31,6 +36,22 @@ public sealed class XAFModule : ModuleBase {
     }
     public override void Setup(XafApplication application) {
         base.Setup(application);
-        // Manage various aspects of the application UI and behavior at the module level.
+        NonPersistentObjectSpace.UseKeyComparisonToDetermineIdentity = true;
+        NonPersistentObjectSpace.AutoSetModifiedOnObjectChangeByDefault = true;
+        application.ObjectSpaceCreated += Application_ObjectSpaceCreated;
     }
+
+    private void Application_ObjectSpaceCreated(object? sender, ObjectSpaceCreatedEventArgs e)
+    {
+        if (e.ObjectSpace is NonPersistentObjectSpace)
+        {
+            NonPersistentObjectSpace npos = (NonPersistentObjectSpace)e.ObjectSpace;
+            var app = sender as XafApplication;
+            npos.AutoDisposeAdditionalObjectSpaces = true;
+            var types = new Type[] { typeof(Forum) };
+            var map = new ObjectMap(npos, types);
+            new TransientNonPersistentObjectAdapter(npos, map, app.ServiceProvider.GetRequiredService<NonPersistentStorageBase>());
+        }
+    }
+
 }

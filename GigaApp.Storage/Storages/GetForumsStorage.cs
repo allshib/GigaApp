@@ -40,5 +40,19 @@ namespace GigaApp.Storage.Storages
                 }
             );
         }
+
+        public IEnumerable<Domain.Models.Forum> GetForumsNotAsync()
+        {
+            return cache.GetOrCreate(
+                nameof(GetForums),
+                entry =>
+                {
+                    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10);
+
+                    return dbContext.Forums
+                        .ProjectTo<Domain.Models.Forum>(mapper.ConfigurationProvider)
+                        .ToArray();
+                });
+        }
     }
 }

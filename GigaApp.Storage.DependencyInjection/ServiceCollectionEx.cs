@@ -12,6 +12,7 @@ using GigaApp.Domain.Authentication;
 using GigaApp.Domain.UseCases.SignOut;
 using GigaApp.Domain;
 using GigaApp.Domain.UseCases;
+using GigaApp.Domain.UseCases.GetForumByKey;
 using GigaApp.Storage.Entities;
 
 namespace GigaApp.Storage.DependencyInjection
@@ -29,7 +30,8 @@ namespace GigaApp.Storage.DependencyInjection
             .AddScoped<ISignOnStorage, SignOnStorage>()
             .AddScoped<ISignOutStorage, SignOutStorage>()
             .AddScoped<IAuthenticationStorage, AuthenticationStorage>()
-            .AddScoped<IDomainEventStorage, DomainEventStorage>();
+            .AddScoped<IDomainEventStorage, DomainEventStorage>()
+            .AddScoped<IGetForumByKeyStorage, GetForumByKeyStorage>();
 
             services.AddDbContext<ForumDbContext>(options => options.UseSqlServer(connectionString, b =>
                 b.MigrationsAssembly("GigaApp.API")), ServiceLifetime.Singleton);
