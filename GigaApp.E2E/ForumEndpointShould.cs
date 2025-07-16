@@ -1,13 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
-using FluentAssertions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentAssertions;
 using System.Net.Http.Json;
 using GigaApp.API.Models;
-using System.Net.Http;
 
 namespace GigaApp.E2E
 {

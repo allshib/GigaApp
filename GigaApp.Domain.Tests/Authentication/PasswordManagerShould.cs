@@ -1,12 +1,6 @@
 ﻿using FluentAssertions;
 using GigaApp.Domain.Authentication;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit.Abstractions;
 
 namespace GigaApp.Domain.Tests.Authentication

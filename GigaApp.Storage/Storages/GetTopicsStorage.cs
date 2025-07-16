@@ -1,11 +1,5 @@
 ﻿using GigaApp.Domain.UseCases.GetTopics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using GigaApp.Storage.Entities;
 
 namespace GigaApp.Storage.Storages
 {

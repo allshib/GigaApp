@@ -1,5 +1,4 @@
 ﻿using GigaApp.Domain.UseCases.GetForums;
-using GigaApp.Domain.UseCases.SignOn;
 using MediatR;
 
 namespace GigaApp.Domain.UseCases.UpdateForumUseCase;

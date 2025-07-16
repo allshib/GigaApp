@@ -1,14 +1,8 @@
-﻿using System;
-using System.Diagnostics.Eventing.Reader;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentValidation;
-using FluentValidation.Results;
 using GigaApp.Domain.Authentication;
-using GigaApp.Domain.Exceptions;
 using GigaApp.Domain.UseCases.SignIn;
-using GigaApp.Domain.UseCases.SignOn;
 using Microsoft.Extensions.Options;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 using Moq;
 using Moq.Language.Flow;
 

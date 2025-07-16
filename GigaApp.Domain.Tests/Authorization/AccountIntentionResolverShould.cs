@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using GigaApp.Domain.Authentication;
 using GigaApp.Domain.Identity;
-using GigaApp.Domain.UseCases.CreateForum;
 using GigaApp.Domain.UseCases.SignOut;
 using Moq;
 

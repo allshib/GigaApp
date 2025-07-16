@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using GigaApp.Domain.UseCases.SignIn;
-using GigaApp.Domain.UseCases.SignOn;
 
 namespace GigaApp.Domain.Tests.SignIn;
 

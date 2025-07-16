@@ -1,16 +1,9 @@
 ﻿using FluentAssertions;
-using FluentValidation;
-using FluentValidation.Results;
 using GigaApp.Domain.Authorization;
 using GigaApp.Domain.Models;
 using GigaApp.Domain.UseCases.CreateForum;
 using Moq;
 using Moq.Language.Flow;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GigaApp.Domain.Tests.CreateForum
 {

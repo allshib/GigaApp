@@ -1,13 +1,4 @@
-﻿using GigaApp.Domain.Models;
-
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GigaApp.Domain.Monitoring;
-using MediatR;
+﻿using MediatR;
 using Forum = GigaApp.Domain.Models.Forum;
 
 

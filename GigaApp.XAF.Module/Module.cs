@@ -1,20 +1,8 @@
-﻿using System.ComponentModel;
-using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Persistent.Base;
-using DevExpress.ExpressApp.Model;
-using DevExpress.ExpressApp.Actions;
-using DevExpress.ExpressApp.Editors;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Updating;
-using DevExpress.ExpressApp.Model.Core;
-using DevExpress.ExpressApp.Model.DomainLogics;
-using DevExpress.ExpressApp.Model.NodeGenerators;
 using GigaApp.XAF.Module.BusinessObjects;
 using GigaApp.XAF.Module.ServiceClasses;
 using Microsoft.Extensions.DependencyInjection;
-
-using GigaApp.Domain.UseCases.GetForums;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace GigaApp.XAF.Module;
 

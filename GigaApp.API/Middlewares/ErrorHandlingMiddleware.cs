@@ -3,12 +3,8 @@
 using FluentValidation;
 using GigaApp.API.Middlewares;
 using GigaApp.Domain.Exceptions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-
-using System.Data;
 
 public class ErrorHandlingMiddleware
 {

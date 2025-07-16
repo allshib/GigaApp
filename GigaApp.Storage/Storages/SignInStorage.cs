@@ -3,13 +3,7 @@ using AutoMapper.QueryableExtensions;
 using GigaApp.Domain.Authentication;
 using GigaApp.Domain.UseCases.SignIn;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GigaApp.Domain.UseCases;
-using GigaApp.Storage.Entities;
 using Session = GigaApp.Storage.Entities.Session;
 
 namespace GigaApp.Storage.Storages

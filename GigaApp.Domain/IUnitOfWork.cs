@@ -1,11 +1,4 @@
-﻿using GigaApp.Domain.UseCases.CreateTopic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GigaApp.Domain
+﻿namespace GigaApp.Domain
 {
     public interface IUnitOfWork
     {

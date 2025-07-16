@@ -1,5 +1,4 @@
-﻿using GigaApp.Domain.Authentication;
-using GigaApp.Domain.Authorization;
+﻿using GigaApp.Domain.Authorization;
 using GigaApp.Domain.Identity;
 
 namespace GigaApp.Domain.UseCases.SignOut;

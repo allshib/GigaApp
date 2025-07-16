@@ -1,10 +1,5 @@
 ﻿using DevExpress.ExpressApp;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
 using DevExpress.ExpressApp.Updating;
-using DevExpress.ExpressApp.EF;
-
-using Microsoft.Extensions.DependencyInjection;
 
 namespace GigaApp.XAF.Module.DatabaseUpdate;
 

@@ -1,7 +1,5 @@
 ﻿using System.Net.Http.Json;
 using FluentAssertions;
-using GigaApp.Domain.Authentication;
-using GigaApp.E2E;
 using GigaApp.Storage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

@@ -2,7 +2,6 @@
 using GigaApp.Domain.UseCases;
 using GigaApp.Storage.Storages;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 namespace GigaApp.Storage.Tests;
 
 public class CreateForumStorageShould : IClassFixture<StorageTestFixture>

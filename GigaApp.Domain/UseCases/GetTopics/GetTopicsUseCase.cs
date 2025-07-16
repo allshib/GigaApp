@@ -1,8 +1,6 @@
-﻿using FluentValidation;
-using GigaApp.Domain.Models;
+﻿using GigaApp.Domain.Models;
 using GigaApp.Domain.UseCases.GetForums;
 using MediatR;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace GigaApp.Domain.UseCases.GetTopics
 {

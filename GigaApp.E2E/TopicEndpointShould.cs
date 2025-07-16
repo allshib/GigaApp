@@ -1,14 +1,4 @@
-﻿using FluentAssertions;
-using GigaApp.Storage;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GigaApp.E2E
+﻿namespace GigaApp.E2E
 {
     public class TopicEndpointShould : IClassFixture<ForumApiApplicationFactory>, IAsyncLifetime
     {

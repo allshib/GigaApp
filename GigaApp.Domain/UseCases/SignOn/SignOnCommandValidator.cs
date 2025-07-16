@@ -1,11 +1,5 @@
 ﻿using FluentValidation;
 using GigaApp.Domain.Exceptions;
-using GigaApp.Domain.UseCases.SignIn;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GigaApp.Domain.UseCases.SignOn
 {

@@ -1,17 +1,10 @@
 ﻿using FluentAssertions;
-using FluentValidation;
-using FluentValidation.Results;
 using GigaApp.Domain.Exceptions;
 using GigaApp.Domain.Models;
 using GigaApp.Domain.UseCases.GetForums;
 using GigaApp.Domain.UseCases.GetTopics;
 using Moq;
 using Moq.Language.Flow;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GigaApp.Domain.Tests.GetTopics
 {

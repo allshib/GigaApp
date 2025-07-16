@@ -1,5 +1,4 @@
 ﻿using GigaApp.Domain.UseCases.SignOut;
-using GigaApp.Storage.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GigaApp.Storage.Storages;

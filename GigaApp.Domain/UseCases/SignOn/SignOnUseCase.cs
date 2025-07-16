@@ -1,8 +1,6 @@
-﻿using FluentValidation;
-using GigaApp.Domain.Authentication;
+﻿using GigaApp.Domain.Authentication;
 using GigaApp.Domain.Identity;
 using MediatR;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace GigaApp.Domain.UseCases.SignOn
 {

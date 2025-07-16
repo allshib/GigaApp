@@ -1,17 +1,12 @@
 using FluentAssertions;
-using FluentValidation;
-using FluentValidation.Results;
 using GigaApp.Domain.Authorization;
 using GigaApp.Domain.Exceptions;
 using GigaApp.Domain.Identity;
 using GigaApp.Domain.Models;
-using GigaApp.Domain.UseCases;
 using GigaApp.Domain.UseCases.CreateTopic;
 using GigaApp.Domain.UseCases.GetForums;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using Moq.Language.Flow;
-using System.Security.Principal;
 using IIdentity = GigaApp.Domain.Identity.IIdentity;
 
 namespace GigaApp.Domain.Tests

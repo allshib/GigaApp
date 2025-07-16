@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GigaApp.Domain.Identity
+﻿namespace GigaApp.Domain.Identity
 {
     /// <summary>
     /// Отвечает за аутентификацию пользователя

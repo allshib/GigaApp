@@ -1,22 +1,8 @@
-﻿using FluentValidation;
-using GigaApp.Domain.Authorization;
-using GigaApp.Domain.Exceptions;
+﻿using GigaApp.Domain.Authorization;
 using GigaApp.Domain.Identity;
-using GigaApp.Domain.Models;
 using GigaApp.Domain.UseCases.GetForums;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using GigaApp.Domain.Monitoring;
 using MediatR;
 using Topic = GigaApp.Domain.Models.Topic;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using GigaApp.Domain.UseCases.CreateForum;
 
 namespace GigaApp.Domain.UseCases.CreateTopic
 {

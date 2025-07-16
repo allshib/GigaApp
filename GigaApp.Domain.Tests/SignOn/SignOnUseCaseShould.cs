@@ -1,16 +1,8 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using GigaApp.Domain.Authentication;
+﻿using GigaApp.Domain.Authentication;
 using GigaApp.Domain.UseCases.SignOn;
 using Moq;
 using Moq.Language.Flow;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Utilities;
 
 namespace GigaApp.Domain.Tests.SignOn
 {

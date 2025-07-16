@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace GigaApp.XAF.Blazor.Server.Authentication
+﻿namespace GigaApp.XAF.Blazor.Server.Authentication
 {
     public interface IAuthTokenStorage
     {

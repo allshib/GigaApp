@@ -4,7 +4,6 @@ using GigaApp.Domain.Authorization;
 using GigaApp.Domain.Exceptions;
 using GigaApp.Domain.Identity;
 using GigaApp.Domain.UseCases.SignOut;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Utilities;
 using Moq;
 using Moq.Language.Flow;
 

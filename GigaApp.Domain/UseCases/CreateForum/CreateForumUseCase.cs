@@ -1,9 +1,6 @@
-﻿using FluentValidation;
-using GigaApp.Domain.Authorization;
+﻿using GigaApp.Domain.Authorization;
 using GigaApp.Domain.Models;
-using GigaApp.Domain.Monitoring;
 using MediatR;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace GigaApp.Domain.UseCases.CreateForum
 {

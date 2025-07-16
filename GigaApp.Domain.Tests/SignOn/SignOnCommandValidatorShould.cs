@@ -1,13 +1,5 @@
 ﻿using FluentAssertions;
-using GigaApp.Domain.UseCases.CreateTopic;
 using GigaApp.Domain.UseCases.SignOn;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GigaApp.Domain.UseCases.SignOn;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace GigaApp.Domain.Tests.SignOn
 {

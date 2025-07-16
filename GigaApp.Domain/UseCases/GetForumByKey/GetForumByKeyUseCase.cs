@@ -1,11 +1,5 @@
 ﻿using GigaApp.Domain.Models;
-using GigaApp.Domain.UseCases.GetForums;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GigaApp.Domain.Exceptions;
 
 namespace GigaApp.Domain.UseCases.GetForumByKey

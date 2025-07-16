@@ -3,21 +3,8 @@ using DevExpress.Xpo;
 using System.Collections;
 using AutoMapper;
 using GigaApp.XAF.Module.BusinessObjects;
-using GigaApp.Domain.UseCases.GetForums;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using AutoMapper.Execution;
-using GigaApp.Domain.Exceptions;
-using GigaApp.Domain.UseCases.GetForumByKey;
 using GigaApp.XAF.Module.UseCaseExtensions;
 using MediatR;
-using System.Linq;
-using GigaApp.Domain.UseCases.CreateForum;
-using DevExpress.XtraPrinting.Native;
-using GigaApp.Domain.Authentication;
-
-using Microsoft.AspNetCore.Http;
 
 namespace GigaApp.XAF.Module.ServiceClasses;
 

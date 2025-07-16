@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using GigaApp.Domain.Models;
 using GigaApp.Domain.UseCases.GetForumByKey;
-using GigaApp.Storage.Entities;
 using Microsoft.EntityFrameworkCore;
 using Forum = GigaApp.Domain.Models.Forum;
 

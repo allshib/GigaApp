@@ -1,8 +1,5 @@
 ﻿using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.ApplicationBuilder;
 using DevExpress.ExpressApp.Blazor;
-using DevExpress.ExpressApp.SystemModule;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace GigaApp.XAF.Blazor.Server;

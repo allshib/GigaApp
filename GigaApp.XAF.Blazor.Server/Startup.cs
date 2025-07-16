@@ -1,19 +1,14 @@
-﻿using System.Reflection;
-using DevExpress.ExpressApp.ApplicationBuilder;
+﻿using DevExpress.ExpressApp.ApplicationBuilder;
 using DevExpress.ExpressApp.Blazor.ApplicationBuilder;
 using DevExpress.ExpressApp.Blazor.Services;
-using DevExpress.Persistent.Base;
 using GigaApp.Domain.Authentication;
 using GigaApp.Domain.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components.Server.Circuits;
 using Microsoft.EntityFrameworkCore;
 using GigaApp.XAF.Blazor.Server.Services;
 using GigaApp.Storage.DependencyInjection;
 using GigaApp.XAF.Blazor.Server.Authentication;
 using GigaApp.XAF.Blazor.Server.Middlewares;
-
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using GigaApp.XAF.Module.ServiceClasses;
 using GigaApp.XAF.Module.Mapping;
 
